@@ -21,7 +21,7 @@ public class OrderDuty {
             System.out.println("Food menu is empty.");
             return;
         } else {
-            restaurants.get(choseRestaurant).orderFood(orders);
+            restaurants.get(choseRestaurant).orderProduct(orders);
         }
     }
 

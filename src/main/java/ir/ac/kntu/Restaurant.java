@@ -3,7 +3,7 @@ package ir.ac.kntu;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Restaurant {
+public class Restaurant extends Market{
     private String name;
     private String address;
     private ArrayList<Food> foodMenu;
@@ -45,135 +45,20 @@ public class Restaurant {
         this.deliveries = new ArrayList<>();
     }
 
-    public void setRestaurantType(RestaurantType restaurantType) {
-        this.restaurantType = restaurantType;
-    }
-
-    public void setDeliveries(ArrayList<Delivery> deliveries){
-        this.deliveries = deliveries;
-    }
-
-    public void setName(String name){
-        this.name=name;
-    }
-
-    public void setAddress(String address){
-        this.address = address;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public void setFoodMenu(ArrayList<Food> foodMenu){
         this.foodMenu=foodMenu;
-    }
-
-    public void setOrders(ArrayList<Order> orders) {
-        this.orders = orders;
-    }
-
-    public void addOrder(Order order) {
-        this.orders.add(order);
     }
 
     public void addFood(Food food){
         this.foodMenu.add(food);
     }
 
-    public void addComment(String foodName,ArrayList<Comment> comments){
-        System.out.println("Write your main text: ");
-        String commentText = ScannerWrapper.getInstance().nextLine();
-        this.comments.add(new Comment(foodName,commentText));
-        comments.add(new Comment(foodName,commentText));
-        System.out.println("Done !!");
-    }
-
-    public void addScore(){
-        System.out.println("Rate the restaurant from 1 to 5 : ");
-        int choice = ScannerWrapper.getInstance().nextInt();
-        if(choice>=1 && choice<=5){
-            setScore(getScore()+choice);
-            System.out.println("Thanks for rating the restaurant .");
-        }else{
-            System.out.println("incorrect rate .");
-            addScore();
-        }
-    }
-
-    public void addDelivery(Delivery delivery){
-        deliveries.add(delivery);
-        delivery.setWorkPlaceNumber(delivery.getWorkPlaceNumber()+1);
-    }
-
-    public void setComments(ArrayList<Comment> comments){
-        this.comments = comments;
-    }
-
-    public void setOpenTime(double openTime){
-        this.openTime = openTime;
-    }
-
-    public void setCloseTime(double closeTime){
-        this.closeTime = closeTime;
-    }
-
-    public void showComments(){
-        for (int i=0;i<comments.size();i++){
-            System.out.println(i + ")\n" + comments.get(i));
-        }
-    }
-
-    public void setDeliveryMultiplicity(int deliveryMultiplicity) {
-        this.deliveryMultiplicity = deliveryMultiplicity;
-    }
-
-    public ArrayList<Delivery> getDeliveries(){
-        return deliveries;
-    }
-
     public RestaurantType getRestaurantType() {
         return restaurantType;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress(){
-        return this.address;
-    }
-
     public ArrayList<Food> getFoodMenu(){
         return this.foodMenu;
-    }
-
-    public ArrayList<Order> getOrders() {
-        return orders;
-    }
-
-    public Order getOrder(int orderIndex) {
-        return orders.get(orderIndex);
-    }
-
-    public int getScore(){
-        return this.score;
-    }
-
-    public double getOpenTime(){
-        return this.openTime;
-    }
-
-    public double getCloseTime(){
-        return this.closeTime;
-    }
-
-    public ArrayList<Comment> getComments(){
-        return this.comments;
-    }
-
-    public int getDeliveryMultiplicity(){
-        return this.deliveryMultiplicity;
     }
 
     public void showFoodMenu(){
@@ -182,7 +67,8 @@ public class Restaurant {
         }
     }
 
-    public void orderFood(ArrayList<Order> orders){
+    @Override
+    public void orderProduct(ArrayList<Order> orders){
         System.out.println("Which food ? ");
         showFoodMenu();
         int orderChoice = ScannerWrapper.getInstance().nextInt();
@@ -197,12 +83,6 @@ public class Restaurant {
         this.orders.add(new Order(foodMenu.get(orderChoice), OrderStatus.PROCESSING));
         orders.add(new Order(foodMenu.get(orderChoice), OrderStatus.PROCESSING));
         System.out.println("Done");
-    }
-
-    public void showDeliveries(){
-        for (int i=0;i<deliveries.size();i++){
-            System.out.println(i + ")" + deliveries.get(i).getName());
-        }
     }
 
     public void setOrderStatus(Manager manager){
@@ -238,22 +118,4 @@ public class Restaurant {
         }
     }
 
-
-    public void showOrders(){
-        for(int i=0;i<orders.size();i++){
-            System.out.println(i +")\n" + orders.get(i).toString());
-        }
-    }
-
-
-    @Override
-    public String toString(){
-        return "name: " + name + "\n" +
-                "Address: " + address + "\n" +
-                "score: " + String.valueOf(score) + "\n" +
-                "oprn time: " + String.valueOf(openTime) + "\n" +
-                "close time: " + String.valueOf(closeTime) + "\n" +
-                "Number of deliveris: " + String.valueOf(deliveryMultiplicity);
-
-    }
 }

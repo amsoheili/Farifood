@@ -2,9 +2,9 @@ package ir.ac.kntu;
 
 import java.util.HashMap;
 
-public class Menu {
+public class AdminRestaurantMenu {
 
-    private Menu() { }
+    private AdminRestaurantMenu() { }
 
     private static HashMap<Integer,MenuOptions> setMenu = new HashMap<>();
 

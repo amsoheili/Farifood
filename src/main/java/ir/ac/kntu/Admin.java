@@ -1,6 +1,8 @@
 package ir.ac.kntu;
 
-public class Admin extends User{
+import ir.ac.kntu.User;
+
+public class Admin extends User {
 
     public Admin() {
 

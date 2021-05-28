@@ -57,15 +57,17 @@ public class Main {
     }
 
     public static void createUsers(Manager manager,Identify identify){
-        Customer cus1 = new Customer(1,"cus1","cus1",918,"cus1");
-        Customer cus2 = new Customer(2,"cus2","cus2",918,"cus2");
-
         Admin admin = new Admin(1380,"admin","admin");
 
+        Customer cus1 = new Customer(1,"cus1","123",1234,"cus1");
+        Customer cus2 = new Customer(2,"cus2","123",1234,"cus2");
+
+        MarketBoss resBoss1 = new MarketBoss(1,"resBoss1","123");
 
         identify.getUsers().add(admin);
         identify.getUsers().add(cus1);
         identify.getUsers().add(cus2);
+        identify.getUsers().add(resBoss1);
     }
 
 }

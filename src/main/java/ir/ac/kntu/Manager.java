@@ -185,12 +185,12 @@ public class Manager {
         OrderDuty.setOrderFood(markets,1);
     }
 
-    public void setOrderFoodRestaurant(){
-        OrderDuty.setOrderFoodRestaurant(markets);
+    public void setOrderFoodSuperMarket(){
+        OrderDuty.setOrderFood(markets,2);
     }
 
-    public void setOrderFoodRestaurant(){
-        OrderDuty.setOrderFoodRestaurant(markets);
+    public void setOrderFruit(){
+        OrderDuty.setOrderFood(markets,3);
     }
 
     public void searchRestaurant(){

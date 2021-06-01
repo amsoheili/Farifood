@@ -357,14 +357,14 @@ public class OrderDuty {
             System.out.println("There are no orders for this market !!");
             return;
         }
-        System.out.println("Which order do you want to change it's food ? ");
+        System.out.println("Which order do you want to change it's product ? ");
         markets.get(marketChoice).showOrders();
         int orderChoice = ScannerWrapper.getInstance().nextInt();
         System.out.println("What do you want to change it into ? ");
         markets.get(marketChoice).showProducts();
-        int foodChoice = ScannerWrapper.getInstance().nextInt();
+        int productChoice = ScannerWrapper.getInstance().nextInt();
         markets.get(marketChoice).getOrder(orderChoice).setProduct(markets.get(marketChoice).
-                getProducts().get(foodChoice));
+                getProducts().get(productChoice));
         System.out.println("<<<< Done >>>>");
     }
 }

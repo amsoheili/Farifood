@@ -5,21 +5,21 @@ import java.util.HashMap;
 import java.time.*;
 
 public class Manager {
-    private ArrayList<Restaurant> restaurants;
+    private ArrayList<Market> markets;
     private ArrayList<Order> orders;
     private ArrayList<Customer> customers;
-    private ArrayList<Food> foods;
+    private ArrayList<Product> products;
     private ArrayList<Delivery> deliveries;
     private ArrayList<Comment> comments;
     private HashMap<Integer,Customer> idCustomer;
 
 
     public Manager() {
-        this.restaurants = new ArrayList<>();
+        this.markets = new ArrayList<>();
         this.orders = new ArrayList<>();
         this.customers = new ArrayList<>();
         this.idCustomer = new HashMap<>();
-        this.foods = new ArrayList<>();
+        this.products = new ArrayList<>();
         this.deliveries = new ArrayList<>();
         this.comments = new ArrayList<>();
     }
@@ -29,7 +29,7 @@ public class Manager {
     }
 
     public void addRestaurant(Restaurant restaurant){
-        restaurants.add(restaurant);
+        markets.add(restaurant);
     }
 
     public void addCustomers(Customer customer) {
@@ -37,8 +37,8 @@ public class Manager {
         this.idCustomer.put(customer.getId(),customer);
     }
 
-    public ArrayList<Restaurant> getRestaurants(){
-        return restaurants;
+    public ArrayList<Market> getMarkets(){
+        return markets;
     }
 
     public ArrayList<Order> getOrders() {
@@ -65,8 +65,16 @@ public class Manager {
         return this.foods;
     }
 
-    public void orderFood(){
-        OrderDuty.orderFood(restaurants,orders);
+    public void orderFoodRestaurant(){
+        OrderDuty.orderSth(markets,orders,1);
+    }
+
+    public void orderFoodSuperMarket(){
+        OrderDuty.orderSth(markets,orders,2);
+    }
+
+    public void orderFoodGrocery(){
+        OrderDuty.orderSth(markets,orders,3);
     }
 
     public void showOrders(){
@@ -74,152 +82,115 @@ public class Manager {
     }
 
     public void showRestaurants() {
-        OrderDuty.showRestaurants(restaurants,true);
+        OrderDuty.showMarkets(markets,true,1);
     }
 
     public void filterOrders(){
-        OrderDuty.filterOrders(orders,restaurants,comments);
+        OrderDuty.filterOrders(orders,markets,comments);
     }
 
     public void addComment(){
-        OrderDuty.addComment(orders,restaurants,comments);
+        OrderDuty.addComment(orders,markets,comments);
     }
 
     public void addScore(){
-        OrderDuty.addScore(orders,restaurants,comments);
+        OrderDuty.addScore(orders,markets,comments);
     }
 
     public void setOrderStatus(){
-        OrderDuty.setOrderStatus(restaurants,this);
+        OrderDuty.setOrderStatus(markets,this);
     }
 
     public void declareRestaurant() {
-        RestaurantDuty.declareRestaurant(restaurants);
+        RestaurantDuty.declareRestaurant(markets);
+    }
+
+    public void declareSuperMarket(){
+        SuperMarketDuty.declareSuperMarket(markets);
+    }
+
+    public void declareGroceryStore(){
+        GroceryStoreDuty.declareGroceryStore(markets);
     }
 
     public void editRestaurant(){
-        RestaurantDuty.editRestaurant(restaurants);
+        RestaurantDuty.editRestaurant(markets);
+    }
+
+    public void editSuperMarket(){
+        SuperMarketDuty.editSuperMarket(markets);
+    }
+
+    public void editGroceryStore(){
+        GroceryStoreDuty.editGroceryStore(markets);
     }
 
     public void showRestaurantScore(){
-        RestaurantDuty.showRestaurantScore(restaurants);
+        RestaurantDuty.showRestaurantScore(markets);
     }
+
+    public void showSuperMarketScore(){SuperMarketDuty.showSuperMarketScore(markets);}
+
+    public void showGroceryStoreScore(){GroceryStoreDuty.showGroceryStoreScore(markets);}
 
     public void showRestaurantComments(){
-        RestaurantDuty.showRestaurantComments(restaurants);
+        RestaurantDuty.showRestaurantComments(markets);
     }
 
-    public void addDelivery(){
-        RestaurantDuty.addDelivery(restaurants,deliveries);
+    public void showSuperMarketComments(){
+        SuperMarketDuty.showSuperMarketComments(markets);
     }
 
-    public void addFood(){
-        RestaurantDuty.addFood(restaurants,foods);
+    public void showGroceryStoreComments(){
+        GroceryStoreDuty.showGroceryStoreComments(markets);
     }
 
-    public int findIndexOrder(Order order){
-        for(int i=0;i< orders.size();i++){
-            if(orders.get(i).equals(order)){
-                return i;
-            }
-        }
-        return 1;
+    public void addDeliveryRestaurant(){
+        RestaurantDuty.addDelivery(markets,deliveries);
     }
 
-    public void showOrdersOfDelivery(){
-        if (deliveries.size() == 0){
-            System.out.println("There are no deliveries yet !!");
-            return;
-        }
-        showDeliveries();
-        int choice = ScannerWrapper.getInstance().nextInt();
-        if (deliveries.get(choice).getOrders().size() == 0){
-            System.out.println("Orders list is empty !!");
-            return;
-        }
-        for (int i=0;i<deliveries.get(choice).getOrders().size();i++){
-            System.out.println(i + ")" + deliveries.get(choice).getOrders().get(i));
-        }
+    public void addDeliverySuperMarket(){
+        SuperMarketDuty.addDelivery(markets,deliveries);
+    }
+
+    public void addDeliveryGroceryStore(){
+        GroceryStoreDuty.addDelivery(markets,deliveries);
+    }
+
+    public void addFoodRestaurant(){
+        RestaurantDuty.addFood(markets,products);
+    }
+
+    public void addFoodSuperMarket(){
+        SuperMarketDuty.addFood(markets,products);
+    }
+
+    public void addFruit(){
+        GroceryStoreDuty.addFruit(markets,products);
     }
 
     public void createCustomer(){
-        System.out.println("Enter the customer's ID: ");
-        int tempId = ScannerWrapper.getInstance().nextInt();
-        System.out.println("Enter the username: ");
-        String tempUserName = ScannerWrapper.getInstance().nextLine();
-        System.out.println("Enter the password: ");
-        String tempPassWord = ScannerWrapper.getInstance().nextLine();
-        System.out.println("Enter the customer's address: ");
-        String tempAddress = ScannerWrapper.getInstance().nextLine();
-        System.out.println("Enter the customer's phone number: ");
-        long tempPhoneNumber = ScannerWrapper.getInstance().nextInt();
-        customers.add(new Customer(tempId,tempUserName,tempPassWord,tempPhoneNumber,tempAddress));
-        System.out.println("Done");
+        CustomerDuty.createCustomer(customers);
     }
 
     public void editCustomer(){
-        if(customers.size() == 0){
-            System.out.println("There are no customers yet !!");
-            return;
-        }
-        System.out.println("Select the customer that you want to edit: ");
-        showCustomers();
-        int choice = ScannerWrapper.getInstance().nextInt();
-        editCustomerMenuHandler(choice);
-    }
-
-    public void editCustomerMenuHandler(int customerCode){
-        System.out.println("Which part do you want to change ?" +
-                "\n1) Id" +
-                "\n2) Username " +
-                "\n3) Password" +
-                "\n4) Phone number" +
-                "\n5) Address" +
-                "\n6) Exit");
-        int choice = ScannerWrapper.getInstance().nextInt();
-        switch (choice){
-            case 1:
-                System.out.println("Enter the new id: ");
-                int newId = ScannerWrapper.getInstance().nextInt();
-                customers.get(customerCode).setId(newId);
-                break;
-            case 2:
-                System.out.println("Enter the new username: ");
-                String newUserName = ScannerWrapper.getInstance().nextLine();
-                customers.get(customerCode).setUserName(newUserName);
-                break;
-            case 3:
-                System.out.println("Enter the new password: ");
-                String newPassWord = ScannerWrapper.getInstance().nextLine();
-                customers.get(customerCode).setPassWord(newPassWord);
-                break;
-            case 4:
-                System.out.println("Enter the new phone number : ");
-                int newPhoneNumber = ScannerWrapper.getInstance().nextInt();
-                customers.get(customerCode).setPhoneNumber(newPhoneNumber);
-                break;
-            case 5:
-                System.out.println("Enter the new address: ");
-                String newAddress = ScannerWrapper.getInstance().nextLine();
-                customers.get(customerCode).setAddress(newAddress);
-                break;
-            case 6:
-                return;
-            default:
-                editCustomerMenuHandler(customerCode);
-                break;
-        }
-        editCustomerMenuHandler(customerCode);
+        CustomerDuty.editCustomer(customers);
     }
 
     public void showCustomers(){
-        for(int i=0;i<customers.size();i++){
-            System.out.println(i +") "+ customers.get(i).getId());
-        }
+        CustomerDuty.showCustomers(customers);
     }
 
-    public void setOrderFood(){
-        OrderDuty.setOrderFood(restaurants);
+    public void setOrderFoodRestaurant(){
+        OrderDuty.setOrderFood(markets,1);
+    }
+
+    public void setOrderFoodRestaurant(){
+        OrderDuty.setOrderFoodRestaurant(markets);
+    }
+
+    public void setOrderFoodRestaurant(){
+        OrderDuty.setOrderFoodRestaurant(markets);
     }
 
     public void searchRestaurant(){
@@ -422,5 +393,30 @@ public class Manager {
         int newScore = ScannerWrapper.getInstance().nextInt();
         deliveries.get(deliveryCode).setScore(newScore);
         System.out.println("<<<< Done >>>>");
+    }
+
+    public int findIndexOrder(Order order){
+        for(int i=0;i< orders.size();i++){
+            if(orders.get(i).equals(order)){
+                return i;
+            }
+        }
+        return 1;
+    }
+
+    public void showOrdersOfDelivery(){
+        if (deliveries.size() == 0){
+            System.out.println("There are no deliveries yet !!");
+            return;
+        }
+        showDeliveries();
+        int choice = ScannerWrapper.getInstance().nextInt();
+        if (deliveries.get(choice).getOrders().size() == 0){
+            System.out.println("Orders list is empty !!");
+            return;
+        }
+        for (int i=0;i<deliveries.get(choice).getOrders().size();i++){
+            System.out.println(i + ")" + deliveries.get(choice).getOrders().get(i));
+        }
     }
 }

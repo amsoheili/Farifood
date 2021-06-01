@@ -6,22 +6,13 @@ public class Main {
         //admin password:admin
 
         Manager manager = new Manager();
-        Identify identify = new Identify(manager);
 
         createRestaurants(manager);
+        Identify identify = new Identify(manager);
+
         createUsers(manager,identify);
 
         while (true){
-//            System.out.println("Enter the username: ");
-//            String userName = ScannerWrapper.getInstance().nextLine();
-//            System.out.println("Enter the password: ");
-//            String passWord = ScannerWrapper.getInstance().nextLine();
-//            if(userName.equals(userName) && passWord.equals(passWord)){
-//                if(!Menu.start(manager)) {
-//                    System.out.println("Thanks for using our services .");
-//                    break;
-//                }
-//            }
             if(!identify.start()) {
                 System.out.println("Thanks for using our services .");
                 break;

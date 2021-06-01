@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class RestaurantDuty {
 
-    public static void declareRestaurant(ArrayList<Restaurant> restaurants) {
+    public static void declareRestaurant(ArrayList<Market> markets) {
         System.out.println("Declaring restaurant:");
         System.out.println("Name: ");
         String tempName = ScannerWrapper.getInstance().nextLine();
@@ -18,12 +18,12 @@ public class RestaurantDuty {
         System.out.println("Delivery multiplicity: ");
         int tempDeliveryMultiplicity = ScannerWrapper.getInstance().nextInt();
         RestaurantType tempRestaurantType = takeRestaurantType();
-        if (restaurants.contains(new Restaurant(tempName, tempAddress, tempOpenTime,
+        if (markets.contains(new Restaurant(tempName, tempAddress, tempOpenTime,
                 tempCloseTime, tempDeliveryMultiplicity, tempRestaurantType))) {
             System.out.println("This restaurant has been declared before !!");
             return;
         } else {
-            restaurants.add(new Restaurant(tempName, tempAddress, tempOpenTime, tempCloseTime, tempDeliveryMultiplicity, tempRestaurantType));
+            markets.add(new Restaurant(tempName, tempAddress, tempOpenTime, tempCloseTime, tempDeliveryMultiplicity, tempRestaurantType));
             System.out.println("<<<<<< Done >>>>>>>");
         }
     }
@@ -46,18 +46,18 @@ public class RestaurantDuty {
         return null;
     }
 
-    public static void editRestaurant(ArrayList<Restaurant> restaurants){
-        if(restaurants.size() == 0){
+    public static void editRestaurant(ArrayList<Market> markets){
+        if(markets.size() == 0){
             System.out.println("There are no active restaurant !!");
             return;
         }
         System.out.println("Which restaurant do you want to edit ?");
-        OrderDuty.showRestaurants(restaurants,false);
+        OrderDuty.showMarkets(markets,false,1);
         int choice = ScannerWrapper.getInstance().nextInt();
-        editRestaurantMenuHandler(choice,restaurants);
+        editRestaurantMenuHandler(choice,markets);
     }
 
-    public static void editRestaurantMenuHandler(int restaurantCode,ArrayList<Restaurant> restaurants){
+    public static void editRestaurantMenuHandler(int restaurantCode,ArrayList<Market> markets){
         System.out.println("Which part do you want to edit ?" +
                 "\n1) Name" +
                 "\n2) Address" +
@@ -70,38 +70,38 @@ public class RestaurantDuty {
             case 1:
                 System.out.println("Enter the new name:");
                 String newName = ScannerWrapper.getInstance().nextLine();
-                restaurants.get(restaurantCode).setName(newName);
-                System.out.println("Name changed .");
+                markets.get(restaurantCode).setName(newName);
+                System.out.println("Restaurant Name changed .");
                 break;
             case 2:
                 System.out.println("Enter the new Address:");
                 String newAddress = ScannerWrapper.getInstance().nextLine();
-                restaurants.get(restaurantCode).setAddress(newAddress);
-                System.out.println("Address changed .");
+                markets.get(restaurantCode).setAddress(newAddress);
+                System.out.println("Restaurant Address changed .");
                 break;
             case 3:
                 System.out.println("Enter the new open time:");
                 double newOpenTime = ScannerWrapper.getInstance().nextDouble();
-                restaurants.get(restaurantCode).setOpenTime(newOpenTime);
-                System.out.println("Open time changed .");
+                markets.get(restaurantCode).setOpenTime(newOpenTime);
+                System.out.println("Restaurant Open time changed .");
                 break;
             case 4:
                 System.out.println("Enter the new close time:");
                 double newCloseTime = ScannerWrapper.getInstance().nextDouble();
-                restaurants.get(restaurantCode).setCloseTime(newCloseTime);
-                System.out.println("Close time changed .");
+                markets.get(restaurantCode).setCloseTime(newCloseTime);
+                System.out.println("Restaurant Close time changed .");
                 break;
             case 5:
                 System.out.println("Enter the new Delivery Multiplicity:");
                 int newDeliveryMultiplicity = ScannerWrapper.getInstance().nextInt();
-                restaurants.get(restaurantCode).setDeliveryMultiplicity(newDeliveryMultiplicity);
-                System.out.println("Delivery Multiplicity changed .");
+                markets.get(restaurantCode).setDeliveryMultiplicity(newDeliveryMultiplicity);
+                System.out.println("Restaurant Delivery Multiplicity changed .");
                 break;
             case 6:
                 return;
             default:
                 System.out.println("Incorrect input !! try again ");
-                editRestaurantMenuHandler(restaurantCode,restaurants);
+                editRestaurantMenuHandler(restaurantCode,markets);
                 break;
         }
     }
@@ -116,16 +116,43 @@ public class RestaurantDuty {
 //        }
 //    }
 
-    public static void addDelivery(ArrayList<Restaurant> restaurants,ArrayList<Delivery> deliveries){
-        if(restaurants.size() == 0){
+    public static void showRestaurantScore(ArrayList<Market> markets){
+        if(markets == null){
+            System.out.println("There are no active restaurant !!");
+            return;
+        }
+        System.out.println("Select the restaurant to show it's Score");
+        OrderDuty.showMarkets(markets,false,1);
+        int choice = ScannerWrapper.getInstance().nextInt();
+        System.out.println(markets.get(choice).getScore());
+    }
+
+    public static void showRestaurantComments(ArrayList<Market> markets){
+        if(markets == null){
+            System.out.println("There are no active restaurant !!");
+            return;
+        }
+        System.out.println("Select the restaurant to show it's Score");
+        OrderDuty.showMarkets(markets,false,1);
+        int choice = ScannerWrapper.getInstance().nextInt();
+        if(markets.get(choice).getComments().size() == 0){
+            System.out.println("There are no comments yet !!");
+            return;
+        }
+        markets.get(choice).showComments();
+    }
+
+    public static void addDelivery(ArrayList<Market> markets,ArrayList<Delivery> deliveries){
+        if(markets.size() == 0){
             System.out.println("There are no declared restaurant !!");
             return;
         }
-        OrderDuty.showRestaurants(restaurants,false);
+        OrderDuty.showMarkets(markets,false,1);
         int resCode = ScannerWrapper.getInstance().nextInt();
+        System.out.println("Active deliveries : ");
         showAvailableDeliveries(deliveries);
         int delCode = ScannerWrapper.getInstance().nextInt();
-        restaurants.get(resCode).addDelivery(deliveries.get(delCode));
+        markets.get(resCode).addDelivery(deliveries.get(delCode));
         System.out.println("<<<< Done >>>>");
     }
 
@@ -137,52 +164,26 @@ public class RestaurantDuty {
         }
     }
 
-    public static void showRestaurantScore(ArrayList<Restaurant> restaurants){
-        if(restaurants == null){
-            System.out.println("There are no active restaurant !!");
-            return;
-        }
-        System.out.println("Select the restaurant to show it's Score");
-        OrderDuty.showRestaurants(restaurants,false);
-        int choice = ScannerWrapper.getInstance().nextInt();
-        System.out.println(restaurants.get(choice).getScore());
-    }
-
-    public static void showRestaurantComments(ArrayList<Restaurant> restaurants){
-        if(restaurants == null){
-            System.out.println("There are no active restaurant !!");
-            return;
-        }
-        System.out.println("Select the restaurant to show it's Score");
-        OrderDuty.showRestaurants(restaurants,false);
-        int choice = ScannerWrapper.getInstance().nextInt();
-        if(restaurants.get(choice).getComments().size() == 0){
-            System.out.println("There are no comments yet !!");
-            return;
-        }
-        restaurants.get(choice).showComments();
-    }
-
-    public static void addFood(ArrayList<Restaurant> restaurants,ArrayList<Food> foods){
-        if(restaurants.size() == 0){
+    public static void addFood(ArrayList<Market> markets,ArrayList<Product> products){
+        if(markets.size() == 0){
             System.out.println("There are no active restaurant !!");
             return;
         }
         System.out.println("Select the restaurant to add a food to it's menu");
-        OrderDuty.showRestaurants(restaurants,false);
+        OrderDuty.showMarkets(markets,false,1);
         int choice = ScannerWrapper.getInstance().nextInt();
-        restaurants.get(choice).addFood(declareFood(foods));
+        markets.get(choice).getProducts().add(declareFood(products));
         System.out.println("<<<< Done >>>>");
     }
 
-    public static Food declareFood(ArrayList<Food> foods){
+    public static Food declareFood(ArrayList<Product> products){
         System.out.println("Name: ");
         String tempName = ScannerWrapper.getInstance().nextLine();
         System.out.println("Price: ");
         double tempPrice = ScannerWrapper.getInstance().nextDouble();
         System.out.println("Cook time (hour): ");
         double tempCookTime = ScannerWrapper.getInstance().nextDouble();
-        foods.add(new Food(tempName,tempPrice,tempCookTime));
+        products.add(new Food(tempName,tempPrice,tempCookTime));
         return new Food(tempName,tempPrice,tempCookTime);
     }
 

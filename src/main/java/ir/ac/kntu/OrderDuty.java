@@ -2,132 +2,229 @@ package ir.ac.kntu;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderDuty {
 
     OrderDuty() {
     }
 
-    public static void orderFood(ArrayList<Restaurant> restaurants, ArrayList<Order> orders) {
-        if (restaurants == null) {
+    public static void orderSth(ArrayList<Market> markets, ArrayList<Order> orders,int marketCode){
+        switch (marketCode){
+            case 1:
+                ArrayList<Market> restaurants = new ArrayList<>();
+                for (Market market:markets){
+                    if (market instanceof Restaurant){
+                        restaurants.add((Restaurant) market);
+                    }
+                }
+                orderSthHandler(restaurants,orders,marketCode);
+                break;
+            case 2:
+                ArrayList<Market> superMarkets = new ArrayList<>();
+                for (Market market:markets){
+                    if (market instanceof SuperMarket){
+                        superMarkets.add((Restaurant) market);
+                    }
+                }
+                orderSthHandler(superMarkets,orders,marketCode);
+                break;
+            case 3:
+                //orderFruit
+                ArrayList<Market> groceryStores = new ArrayList<>();
+                for (Market market:markets){
+                    if (market instanceof GroceryStore){
+                        groceryStores.add((Restaurant) market);
+                    }
+                }
+                orderSthHandler(groceryStores,orders,marketCode);
+                break;
+            default:
+                return;
+        }
+    }
+    public static void orderSthHandler(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode) {
+        if (markets == null) {
             System.out.println("There are no active restaurant.");
             return;
         } else {
             System.out.println("Which restaurant ?");
-            showRestaurants(restaurants,true);
+            showMarkets(markets,true,marketCode);
         }
         int choseRestaurant = ScannerWrapper.getInstance().nextInt();
-        if (restaurants.get(choseRestaurant).getFoodMenu().size() == 0) {
+        if (markets.get(choseRestaurant).getProducts().size() == 0) {
             System.out.println("Food menu is empty.");
             return;
         } else {
-            restaurants.get(choseRestaurant).orderProduct(orders);
+            markets.get(choseRestaurant).orderProduct(orders);
         }
     }
 
-    public static void showRestaurants(ArrayList<Restaurant> restaurants,boolean timeConsider) {
-        System.out.println("How do you want to display the restaurants ?" +
+
+    public static void showMarkets(ArrayList<Market> markets,boolean timeConsider,int marketCode) {
+        System.out.println("How do you want to display the " +
+                MarketCode.getMarket(marketCode).toString().toLowerCase(Locale.ROOT) + "'s ?" +
                 "\n1) Ascending score" +
                 "\n2) Descending score" +
                 "\n3) Ascending number of comments" +
                 "\n4) Descending number of comments" +
                 "\n5) Editor's pick");
-        showRestaurantsHandler(restaurants,timeConsider);
+        showMarketsHandler(markets,timeConsider,marketCode);
+        switch (marketCode){
+            case 1:
+                showRestaurants(markets,timeConsider);
+                break;
+            case 2:
+                showSuperMarkets(markets,timeConsider);
+                break;
+            case 3:
+                showGroceryStore(markets,timeConsider);
+                break;
+        }
+    }
+
+    public static void showRestaurants(ArrayList<Market> markets,boolean timeConsider){
         if (timeConsider == true){
-            for (int i = 0; i < restaurants.size(); i++) {
-                if ( LocalTime.now().getHour() >= restaurants.get(i).getOpenTime() &&
-                        LocalTime.now().getHour() <= restaurants.get(i).getCloseTime()){
-                    System.out.println(i + ")" + restaurants.get(i).getName());
+            for (int i = 0; i < markets.size(); i++) {
+                if ( LocalTime.now().getHour() >= markets.get(i).getOpenTime() &&
+                        LocalTime.now().getHour() <= markets.get(i).getCloseTime() &&
+                        markets.get(i) instanceof Restaurant){
+                    System.out.println(i + ")" + markets.get(i).getName());
                 }
+
             }
         }else{
-            for (int i = 0; i < restaurants.size(); i++) {
-                System.out.println(i + ")" + restaurants.get(i).getName());
+            for (int i = 0; i < markets.size(); i++) {
+                if (markets.get(i) instanceof Restaurant){
+                    System.out.println(i + ")" + markets.get(i).getName());
+                }
             }
         }
     }
 
-    private static void showRestaurantsHandler(ArrayList<Restaurant> restaurants,boolean timeConsider) {
+    public static void showSuperMarkets(ArrayList<Market> markets,boolean timeConsider){
+        if (timeConsider == true){
+            for (int i = 0; i < markets.size(); i++) {
+                if ( LocalTime.now().getHour() >= markets.get(i).getOpenTime() &&
+                        LocalTime.now().getHour() <= markets.get(i).getCloseTime() &&
+                        markets.get(i) instanceof SuperMarket){
+                    System.out.println(i + ")" + markets.get(i).getName());
+                }
+
+            }
+        }else{
+            for (int i = 0; i < markets.size(); i++) {
+                if (markets.get(i) instanceof SuperMarket){
+                    System.out.println(i + ")" + markets.get(i).getName());
+                }
+            }
+        }
+    }
+
+    public static void showGroceryStore(ArrayList<Market> markets,boolean timeConsider) {
+        if (timeConsider == true) {
+            for (int i = 0; i < markets.size(); i++) {
+                if (LocalTime.now().getHour() >= markets.get(i).getOpenTime() &&
+                        LocalTime.now().getHour() <= markets.get(i).getCloseTime() &&
+                        markets.get(i) instanceof GroceryStore) {
+                    System.out.println(i + ")" + markets.get(i).getName());
+                }
+
+            }
+        } else {
+            for (int i = 0; i < markets.size(); i++) {
+                if (markets.get(i) instanceof GroceryStore) {
+                    System.out.println(i + ")" + markets.get(i).getName());
+                }
+            }
+
+        }
+    }
+
+    private static void showMarketsHandler(ArrayList<Market> markets,boolean timeConsider,int marketCode) {
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice) {
             case 1:
-                showAscendingScore(restaurants);
+                showAscendingScore(markets);
                 break;
             case 2:
-                showDescendingScore(restaurants);
+                showDescendingScore(markets);
                 break;
             case 3:
-                showAscendingNumOfComments(restaurants);
+                showAscendingNumOfComments(markets);
                 break;
             case 4:
-                showDescendingNumOfComments(restaurants);
+                showDescendingNumOfComments(markets);
                 break;
             case 5:
-                showEditorPick(restaurants);
+                //showEditorPick(markets,marketCode);
                 System.out.println("And the main list is : ");
                 break;
             default:
                 System.out.println("Incorrect input !! please try again ");
-                showRestaurants(restaurants,timeConsider);
+                showMarkets(markets,timeConsider,marketCode);
                 break;
         }
         //showRestaurants();
     }
 
-    private static void showAscendingScore(ArrayList<Restaurant> restaurants) {
-        for (int i = 0; i < restaurants.size() - 1; i++) {
-            for (int j = 0; j < restaurants.size() - i - 1; j++) {
-                if (restaurants.get(i).getScore() > restaurants.get(i + 1).getScore()) {
-                    Restaurant temp = restaurants.get(i + 1);
-                    restaurants.set(i + 1, restaurants.get(i));
-                    restaurants.set(i, temp);
+    private static void showAscendingScore(ArrayList<Market> markets) {
+        for (int i = 0; i < markets.size() - 1; i++) {
+            for (int j = 0; j < markets.size() - i - 1; j++) {
+                if (markets.get(i).getScore() > markets.get(i + 1).getScore()) {
+                    Market temp = markets.get(i + 1);
+                    markets.set(i + 1, markets.get(i));
+                    markets.set(i, temp);
                 }
             }
         }
     }
 
-    private static void showDescendingScore(ArrayList<Restaurant> restaurants) {
-        for (int i = 0; i < restaurants.size() - 1; i++) {
-            for (int j = 0; j < restaurants.size() - i - 1; j++) {
-                if (restaurants.get(i).getScore() < restaurants.get(i + 1).getScore()) {
-                    Restaurant temp = restaurants.get(i + 1);
-                    restaurants.set(i + 1, restaurants.get(i));
-                    restaurants.set(i, temp);
+    private static void showDescendingScore(ArrayList<Market> markets) {
+        for (int i = 0; i < markets.size() - 1; i++) {
+            for (int j = 0; j < markets.size() - i - 1; j++) {
+                if (markets.get(i).getScore() < markets.get(i + 1).getScore()) {
+                    Market temp = markets.get(i + 1);
+                    markets.set(i + 1, markets.get(i));
+                    markets.set(i, temp);
                 }
             }
         }
     }
 
-    private static void showAscendingNumOfComments(ArrayList<Restaurant> restaurants) {
-        for (int i = 0; i < restaurants.size() - 1; i++) {
-            for (int j = 0; j < restaurants.size() - i - 1; j++) {
-                if (restaurants.get(i).getComments().size() > restaurants.get(i + 1).getComments().size()) {
-                    Restaurant temp = restaurants.get(i + 1);
-                    restaurants.set(i + 1, restaurants.get(i));
-                    restaurants.set(i, temp);
+    private static void showAscendingNumOfComments(ArrayList<Market> markets) {
+        for (int i = 0; i < markets.size() - 1; i++) {
+            for (int j = 0; j < markets.size() - i - 1; j++) {
+                if (markets.get(i).getComments().size() > markets.get(i + 1).getComments().size()) {
+                    Market temp = markets.get(i + 1);
+                    markets.set(i + 1, markets.get(i));
+                    markets.set(i, temp);
                 }
             }
         }
     }
 
-    private static void showDescendingNumOfComments(ArrayList<Restaurant> restaurants) {
-        for (int i = 0; i < restaurants.size() - 1; i++) {
-            for (int j = 0; j < restaurants.size() - i - 1; j++) {
-                if (restaurants.get(i).getScore() < restaurants.get(i + 1).getScore()) {
-                    Restaurant temp = restaurants.get(i + 1);
-                    restaurants.set(i + 1, restaurants.get(i));
-                    restaurants.set(i, temp);
+    private static void showDescendingNumOfComments(ArrayList<Market> markets) {
+        for (int i = 0; i < markets.size() - 1; i++) {
+            for (int j = 0; j < markets.size() - i - 1; j++) {
+                if (markets.get(i).getScore() < markets.get(i + 1).getScore()) {
+                    Market temp = markets.get(i + 1);
+                    markets.set(i + 1, markets.get(i));
+                    markets.set(i, temp);
                 }
             }
         }
     }
 
-    private static void showEditorPick(ArrayList<Restaurant> restaurants) {
-        int x = LocalTime.now().getMinute() % restaurants.size();
-        System.out.println("Our suggestion is : " + x + ")" + restaurants.get(x).getName());
-    }
+//    private static void showEditorPick(ArrayList<Market> markets,int marketCode) {
+//        int x = LocalTime.now().getMinute() % markets.size();
+//        for (int i=0;i<markets.size();i++){
+//            if (  )
+//        }
+//        System.out.println("Our suggestion is : " + x + ")" + markets.get(x).getName());
+//    }
 
-    public static void filterOrders(ArrayList<Order> orders,ArrayList<Restaurant> restaurants,ArrayList<Comment> comments) {
+    public static void filterOrders(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments) {
         if (orders == null) {
             System.out.println("There are no order");
             return;
@@ -146,12 +243,12 @@ public class OrderDuty {
                 showFilteredOrders(OrderStatus.SENDING,orders);
                 break;
             case 3:
-                deliveredOrdersMenu(orders,restaurants,comments);
+                deliveredOrdersMenu(orders, markets,comments);
                 break;
             case 4:
                 return;
             default:
-                filterOrders(orders,restaurants,comments);
+                filterOrders(orders, markets,comments);
         }
     }
 
@@ -163,13 +260,13 @@ public class OrderDuty {
         }
     }
 
-    private static void deliveredOrdersMenu(ArrayList<Order> orders,ArrayList<Restaurant> restaurants,ArrayList<Comment> comments) {
+    private static void deliveredOrdersMenu(ArrayList<Order> orders, ArrayList<Market> markets, ArrayList<Comment> comments) {
         if (isThereDeliveredOrder(orders)) {
             showFilteredOrders(OrderStatus.DELIVERED,orders);
             System.out.println("Do you want to add comment ?( 1-Yes   2-No)");
             int choice = ScannerWrapper.getInstance().nextInt();
             if (choice == 1) {
-                addComment(orders,restaurants,comments);
+                addComment(orders, markets,comments);
             } else {
                 System.out.println("Bye!");
             }
@@ -188,51 +285,51 @@ public class OrderDuty {
         return false;
     }
 
-    public static void addComment(ArrayList<Order> orders,ArrayList<Restaurant> restaurants,ArrayList<Comment> comments){
+    public static void addComment(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments){
         if(isThereDeliveredOrder(orders)){
             System.out.println("Which one ?");
             showFilteredOrders(OrderStatus.DELIVERED,orders);
             int choice = ScannerWrapper.getInstance().nextInt();
-            findRestaurant(orders.get(choice),restaurants).addComment(orders.get(choice).getFood().getName(),comments);
+            findMarket(orders.get(choice), markets).addComment(orders.get(choice).getProduct().getName(),comments);
         }else{
             System.out.println("There are not any delivered order :)");
         }
     }
 
-    private static Restaurant findRestaurant(Order order,ArrayList<Restaurant> restaurants){
-        for(int i=0;i< restaurants.size();i++){
-            for(int j=0;j<restaurants.get(i).getOrders().size();j++){
-                if(restaurants.get(i).getOrders().get(j).equals(order)){
-                    return restaurants.get(i);
+    private static Market findMarket(Order order,ArrayList<Market> markets){
+        for(int i = 0; i< markets.size(); i++){
+            for(int j = 0; j< markets.get(i).getOrders().size(); j++){
+                if(markets.get(i).getOrders().get(j).equals(order)){
+                    return markets.get(i);
                 }
             }
         }
         return null;
     }
 
-    public static void setOrderStatus(ArrayList<Restaurant> restaurants,Manager manager){
-        if(restaurants.size() == 0){
-            System.out.println("There are no active restaurant.");
+    public static void setOrderStatus(ArrayList<Market> markets,Manager manager){
+        if(markets.size() == 0){
+            System.out.println("There are no active market.");
             return;
         }
-        System.out.println("Choose a restaurant to change it's orders :");
-        showRestaurants(restaurants,false);
+        System.out.println("Choose a market to change it's orders :");
+        showMarkets(markets,false,1);
         int choice = ScannerWrapper.getInstance().nextInt();
-        if(restaurants.get(choice).getOrders().size() == 0){
+        if(markets.get(choice).getOrders().size() == 0){
             System.out.println("orders is empty.");
             return;
         }else{
-            restaurants.get(choice).setOrderStatus(manager);
+            markets.get(choice).setOrderStatus(manager);
         }
     }
 
-    public static void addScore(ArrayList<Order> orders,ArrayList<Restaurant> restaurants,ArrayList<Comment> comments){
+    public static void addScore(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments){
         if(isThereDeliveredOrder(orders)){
             System.out.println("Which one ? ");
             showFilteredOrders(OrderStatus.DELIVERED,orders);
             int choice = ScannerWrapper.getInstance().nextInt();
-            findRestaurant(orders.get(choice),restaurants).addScore();
-            orders.get(choice).getFood().addScore();
+            findMarket(orders.get(choice),markets).addScore();
+            orders.get(choice).getProduct().addScore();
         }else {
             System.out.println("There are not any delivered order :)");
         }
@@ -244,29 +341,30 @@ public class OrderDuty {
             return;
         }
         for(int i=0;i<orders.size();i++){
-            System.out.println(i + ")" + orders.get(i).getFood());
+            System.out.println(i + ")" + orders.get(i).getProduct());
         }
     }
 
-    public static void setOrderFood(ArrayList<Restaurant> restaurants){
-        System.out.println("Which restaurant do you want to change it's order's food ?");
-        showRestaurants(restaurants,false);
+    public static void setOrderFood(ArrayList<Market> markets,int marketCode){
+        System.out.println("Which market do you want to change it's order's food ?");
+        showMarkets(markets,false,marketCode);
         int choice = ScannerWrapper.getInstance().nextInt();
-        setOrderFoodHandler(choice,restaurants);
+        setOrderFoodHandler(choice,markets);
     }
 
-    public static void setOrderFoodHandler(int restaurantCode,ArrayList<Restaurant> restaurants){
-        if(restaurants.get(restaurantCode).getOrders().size() == 0){
-            System.out.println("There are no orders fo this restaurant !!");
+    public static void setOrderFoodHandler(int marketChoice, ArrayList<Market> markets){
+        if(markets.get(marketChoice).getOrders().size() == 0){
+            System.out.println("There are no orders for this market !!");
             return;
         }
         System.out.println("Which order do you want to change it's food ? ");
-        restaurants.get(restaurantCode).showOrders();
+        markets.get(marketChoice).showOrders();
         int orderChoice = ScannerWrapper.getInstance().nextInt();
         System.out.println("What do you want to change it into ? ");
-        restaurants.get(restaurantCode).showFoodMenu();
+        markets.get(marketChoice).showProducts();
         int foodChoice = ScannerWrapper.getInstance().nextInt();
-        restaurants.get(restaurantCode).getOrder(orderChoice).setFood(restaurants.get(restaurantCode).getFoodMenu().get(foodChoice));
+        markets.get(marketChoice).getOrder(orderChoice).setProduct(markets.get(marketChoice).
+                getProducts().get(foodChoice));
         System.out.println("<<<< Done >>>>");
     }
 }

@@ -1,7 +1,7 @@
 package ir.ac.kntu;
 
 public enum MenuOptions {
-    ORDERS_MENU(1),SETTINGS(2),DELIVERY_MENU(3),RESTAURANT_MENU(4);
+    ORDERS_MENU(1),SETTINGS(2),DELIVERY_MENU(3),MARKET_MENU(4);
 
     private int rate;
 
@@ -25,8 +25,8 @@ public enum MenuOptions {
             return MenuOptions.SETTINGS;
         }else if(MenuOptions.DELIVERY_MENU.getRate() == rate){
             return MenuOptions.DELIVERY_MENU;
-        }else if(MenuOptions.RESTAURANT_MENU.getRate() == rate){
-            return MenuOptions.RESTAURANT_MENU;
+        }else if(MenuOptions.MARKET_MENU.getRate() == rate){
+            return MenuOptions.MARKET_MENU;
         }else{
             return null;
         }

@@ -74,10 +74,12 @@ public class Identify {
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
-                AdminRestaurantMenu.start(manager);
+                AdminRestaurantMenu adminRestaurantMenu = new AdminRestaurantMenu();
+                adminRestaurantMenu.start(manager);
                 break;
             case 2:
-                //AdminSuperMarketMenu();
+                AdminSuperMarketMenu adminSuperMarketMenu = new AdminSuperMarketMenu();
+                adminSuperMarketMenu.start(manager);
                 break;
             case 3:
                 //AdminGroceryMenu();

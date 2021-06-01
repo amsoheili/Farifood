@@ -2,40 +2,41 @@ package ir.ac.kntu;
 
 import java.util.HashMap;
 
-public class AdminRestaurantMenu {
+public class AdminRestaurantMenu extends AdminMenu{
 
-    private AdminRestaurantMenu() { }
+    AdminRestaurantMenu() { }
 
-    private static HashMap<Integer,MenuOptions> setMenu = new HashMap<>();
+    private HashMap<Integer,MenuOptions> setMenu = new HashMap<>();
 
-    public static boolean start(Manager manager){
+
+    public  boolean start(Manager manager){
         setShowMainMenu();
         return mainMenu(manager);
     }
 
-    public static boolean mainMenu(Manager manager){
+    public boolean mainMenu(Manager manager){
         System.out.println("What do you want to do?" +
                 "\n1) " + MenuOptions.getOption(1) +
                 "\n2) " + MenuOptions.getOption(2) +
                 "\n3) " + MenuOptions.getOption(3) +
                 "\n4) " + MenuOptions.getOption(4) +
-                "\n5) EXIT_THE_PROGRAM");
+                "\n5) EXIT_RESTAURANT_MARKET");
         return mainMenuHandler(manager);
     }
 
-    public static void setShowMainMenu(){
+    public void setShowMainMenu(){
         System.out.println("Enter your wished set to show these options in main menu : " +
                 "(for example 2314) ");
         System.out.println(
                 "1) Orders Menu" +
-                "\n2) Settings" +
-                "\n3) Delivery Menu" +
-                "\n4) Restaurant Menu");
+                        "\n2) Settings" +
+                        "\n3) Delivery Menu" +
+                        "\n4) Restaurant Menu");
         int set = ScannerWrapper.getInstance().nextInt();
         setMenu.put(1,MenuOptions.ORDERS_MENU);
         setMenu.put(2,MenuOptions.SETTINGS);
         setMenu.put(3,MenuOptions.DELIVERY_MENU);
-        setMenu.put(4,MenuOptions.RESTAURANT_MENU);
+        setMenu.put(4,MenuOptions.MARKET_MENU);
         setMenu.get(set%10).setRate(4);
         set /= 10;
         setMenu.get(set%10).setRate(3);
@@ -45,7 +46,7 @@ public class AdminRestaurantMenu {
         setMenu.get(set%10).setRate(1);
     }
 
-    public static boolean mainMenuHandler(Manager manager){
+    public boolean mainMenuHandler(Manager manager){
         int choice = ScannerWrapper.getInstance().nextInt();
         if(choice == MenuOptions.ORDERS_MENU.getRate()){
             ordersMenu(manager);
@@ -53,7 +54,7 @@ public class AdminRestaurantMenu {
             settings(manager);
         }else if(choice == MenuOptions.DELIVERY_MENU.getRate()){
             deliveryMenu(manager);
-        }else if(choice == MenuOptions.RESTAURANT_MENU.getRate()){
+        }else if(choice == MenuOptions.MARKET_MENU.getRate()){
             restaurantsMenu(manager);
         }else if(choice == 5){
             return false;
@@ -63,7 +64,7 @@ public class AdminRestaurantMenu {
         return false;
     }
 
-    public static void ordersMenu(Manager manager){
+    public void ordersMenu(Manager manager){
         System.out.println("What do you want to do?" +
                 "\n1) Order a food" +
                 "\n2) filter the orders" +
@@ -76,11 +77,11 @@ public class AdminRestaurantMenu {
         ordersMenuHandler(manager);
     }
 
-    public static void ordersMenuHandler(Manager manager){
+    public void ordersMenuHandler(Manager manager){
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
-                manager.orderFood();
+                manager.orderFoodRestaurant();
                 break;
             case 2:
                 manager.filterOrders();
@@ -110,7 +111,7 @@ public class AdminRestaurantMenu {
         mainMenu(manager);
     }
 
-    public static void deliveryMenu(Manager manager){
+    public void deliveryMenu(Manager manager){
         System.out.println("What the fact are you interested in ? " +
                 "\n1) Declare a new delivery" +
                 "\n2) Show deliveries" +
@@ -120,7 +121,7 @@ public class AdminRestaurantMenu {
         deliveryMenuHandler(manager);
     }
 
-    public static void deliveryMenuHandler(Manager manager){
+    public void deliveryMenuHandler(Manager manager){
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
@@ -146,7 +147,8 @@ public class AdminRestaurantMenu {
         deliveryMenu(manager);
     }
 
-    public static void restaurantsMenu(Manager manager){
+    @Override
+    public void restaurantsMenu(Manager manager){
         System.out.println("What do you want to do ?" +
                 "\n1) Show active restaurants" +
                 "\n2) Declare a new restaurant" +
@@ -164,7 +166,7 @@ public class AdminRestaurantMenu {
         restaurantsMenuHandler(manager);
     }
 
-    public static void restaurantsMenuHandler(Manager manager){
+    public void restaurantsMenuHandler(Manager manager){
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
@@ -214,7 +216,7 @@ public class AdminRestaurantMenu {
         restaurantsMenu(manager);
     }
 
-    public static void settings(Manager manager){
+    public void settings(Manager manager){
         System.out.println("What do you want to do?" +
                 "\n1) Set main menu's order" +
                 "\n2) Customers settings" +
@@ -222,7 +224,7 @@ public class AdminRestaurantMenu {
         settingsMenuHandler(manager);
     }
 
-    public static void settingsMenuHandler(Manager manager){
+    public void settingsMenuHandler(Manager manager){
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
@@ -242,7 +244,7 @@ public class AdminRestaurantMenu {
         settings(manager);
     }
 
-    public static void customersMenu(Manager manager){
+    public void customersMenu(Manager manager){
         System.out.println("What do you want to do?" +
                 "\n1) Create a new customer" +
                 "\n2) Edit a customer" +
@@ -251,7 +253,7 @@ public class AdminRestaurantMenu {
         customersMenuHandler(manager);
     }
 
-    public static void customersMenuHandler(Manager manager){
+    public void customersMenuHandler(Manager manager){
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:

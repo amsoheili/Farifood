@@ -12,12 +12,29 @@ public class Market {
     private ArrayList<Comment> comments;
     private int deliveryMultiplicity;
     private ArrayList<Delivery> deliveries;
-
+    private ArrayList<Product> products;
 
     Market(){
+        products = new ArrayList<>();
         orders = new ArrayList<>();
         comments = new ArrayList<>();
         deliveries = new ArrayList<>();
+    }
+
+    Market(String name,String address,int openTime,int closeTime,int deliveryMultiplicity){
+        this.name = name;
+        this.address = address;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.deliveryMultiplicity = deliveryMultiplicity;
+        products = new ArrayList<>();
+        orders = new ArrayList<>();
+        comments = new ArrayList<>();
+        deliveries = new ArrayList<>();
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
     public void setDeliveries(ArrayList<Delivery> deliveries){
@@ -131,6 +148,10 @@ public class Market {
         return this.deliveryMultiplicity;
     }
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
     public void showOrders(){
         for(int i=0;i<orders.size();i++){
             System.out.println(i +")\n" + orders.get(i).toString());
@@ -144,6 +165,45 @@ public class Market {
     }
 
     public void orderProduct(ArrayList<Order> orders){
+    }
+
+    public void setOrderStatus(Manager manager){
+        if(orders.size() == 0){
+            System.out.println("Orders is empty .");
+            return;
+        }
+        System.out.println("Which one ?");
+        showOrders();
+        int choice = ScannerWrapper.getInstance().nextInt();
+        System.out.println("The order is this:"+orders.get(choice).toString());
+        System.out.println("What do you want change it's status into ?" +
+                "\n1) " + OrderStatus.PROCESSING +
+                "\n2) " + OrderStatus.SENDING +
+                "\n3) " + OrderStatus.DELIVERED);
+        int choice1 = ScannerWrapper.getInstance().nextInt();
+        switch (choice1){
+            case 1:
+                this.orders.get(choice).setStatus(OrderStatus.PROCESSING);
+                manager.getOrders().get(manager.findIndexOrder(this.orders.get(choice))).setStatus(OrderStatus.PROCESSING);
+                break;
+            case 2:
+                this.orders.get(choice).setStatus(OrderStatus.SENDING);
+                manager.getOrders().get(manager.findIndexOrder(this.orders.get(choice))).setStatus(OrderStatus.SENDING);
+                break;
+            case 3:
+                this.orders.get(choice).setStatus(OrderStatus.DELIVERED);
+                manager.getOrders().get(manager.findIndexOrder(this.orders.get(choice))).setStatus(OrderStatus.DELIVERED);
+                break;
+            default:
+                setOrderStatus(manager);
+                break;
+        }
+    }
+
+    public void showProducts(){
+        for (int i=0;i< products.size();i++){
+            System.out.println(i + ") " + products.get(i).getName());
+        }
     }
 
     @Override

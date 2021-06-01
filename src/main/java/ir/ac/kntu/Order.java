@@ -3,25 +3,25 @@ package ir.ac.kntu;
 import java.util.Objects;
 
 public class Order {
-    private Food food;
+    private Product product;
     private OrderStatus status;
 
     Order() { }
 
-    Order(Food food,OrderStatus status){
-        this.food = food;
+    Order(Product product,OrderStatus status){
+        this.product = product;
         this.status = status;
     }
-    public void setFood(Food foodName) {
-        this.food = foodName;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public Food getFood() {
-        return food;
+    public Product getProduct() {
+        return product;
     }
 
     public OrderStatus getStatus() {
@@ -30,7 +30,7 @@ public class Order {
 
     @Override
     public String toString(){
-        return "\nfood name: " + food.getName() +
+        return "\nfood name: " + product.getName() +
                 "\nStatus: " + status;
     }
 
@@ -40,7 +40,7 @@ public class Order {
             return false;
         }
         Order other = (Order) o;
-        if(!other.getFood().equals(this.getFood())){
+        if(!other.getProduct().equals(this.getProduct())){
             return false;
         }
         if(!other.getStatus().equals(this.getStatus())){

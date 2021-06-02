@@ -194,7 +194,18 @@ public class Manager {
     }
 
     public void searchRestaurant(){
-        RestaurantDuty.searchRestaurant(restaurants);
+        Search search = new Search(markets);
+        search.start(1);
+    }
+
+    public void searchSuperMarket(){
+        Search search = new Search(markets);
+        search.start(2);
+    }
+
+    public void searchGroceryStore(){
+        Search search = new Search(markets);
+        search.start(3);
     }
 
     public void showCommentOfFood(){

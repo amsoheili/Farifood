@@ -148,4 +148,39 @@ public class SuperMarketDuty {
         products.add(new Food(tempName,tempPrice,tempCookTime));
         return new Food(tempName,tempPrice,tempCookTime);
     }
+
+    public static void showBestFood(ArrayList<Market> markets){
+        ArrayList<SuperMarket> superMarkets = findSuperMarkets(markets);
+        if(superMarkets.size() == 0){
+            System.out.println("There are no active super market !!");
+            return;
+        }
+        System.out.println("Which one ?");
+        OrderDuty.showMarkets(markets,false,2);
+        int choice = ScannerWrapper.getInstance().nextInt();
+        showBestFoodsOfSuperMarket((SuperMarket) markets.get(choice));
+    }
+
+    public static ArrayList<SuperMarket> findSuperMarkets(ArrayList<Market> markets){
+        ArrayList<SuperMarket> superMarkets = new ArrayList<>();
+        for (int i=0;i< markets.size();i++){
+            if (markets.get(i) instanceof SuperMarket){
+                superMarkets.add(((SuperMarket) markets.get(i)));
+            }
+        }
+        return superMarkets;
+    }
+
+    public static void showBestFoodsOfSuperMarket(SuperMarket superMarket){
+        for (int i = 0;i < superMarket.getProducts().size();i++){
+            for(int j = 0;j < superMarket.getProducts().size() - 1 - i;j++){
+                if ( superMarket.getProducts().get(i).getScore() < superMarket.getProducts().get(i+1).getScore() ){
+                    Product tmp = superMarket.getProducts().get(i+1);
+                    superMarket.getProducts().set(i+1,superMarket.getProducts().get(i));
+                    superMarket.getProducts().set(i,tmp);
+                }
+            }
+        }
+        superMarket.showProducts();
+    }
 }

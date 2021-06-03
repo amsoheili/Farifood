@@ -187,97 +187,42 @@ public class RestaurantDuty {
         return new Food(tempName,tempPrice,tempCookTime);
     }
 
-    public static void searchRestaurant(ArrayList<Restaurant> restaurants){
-        if(restaurants.size() == 0){
-            System.out.println("There are no active restaurant ");
-            return;
-        }
-        System.out.println("How do you want to search the restaurant ? ( 1-Based on name  2-Based on type )");
-        searchRestaurantHandler(restaurants);
-    }
-
-    public static void searchRestaurantHandler(ArrayList<Restaurant> restaurants){
-        int choice = ScannerWrapper.getInstance().nextInt();
-        switch (choice){
-            case 1:
-                searchRestaurantName(restaurants);
-                break;
-            case 2:
-                searchRestaurantType(restaurants);
-                break;
-            default:
-                System.out.println("Incorrect input !!! please try again ");
-                searchRestaurant(restaurants);
-                break;
-        }
-    }
-
-    public static void searchRestaurantName(ArrayList<Restaurant> restaurants){
-        System.out.println("Enter the name : ");
-        String name = ScannerWrapper.getInstance().nextLine();
-        for (int i=0;i< restaurants.size();i++){
-            if(restaurants.get(i).getName().equals(name)){
-                System.out.println(i + ")" + restaurants.get(i).getName());
-            }
-        }
-    }
-
-    public static void searchRestaurantType(ArrayList<Restaurant> restaurants){
-        System.out.println("Select the type :" +
-                "\n1) " + RestaurantType.ECONOMIC +
-                "\n2) " + RestaurantType.MEDIUM +
-                "\n3) " + RestaurantType.LUXURY);
-        int choice = ScannerWrapper.getInstance().nextInt();
-        switch (choice){
-            case 1:
-                showFilteredRestaurant(RestaurantType.ECONOMIC,restaurants);
-                break;
-            case 2:
-                showFilteredRestaurant(RestaurantType.MEDIUM,restaurants);
-                break;
-            case 3:
-                showFilteredRestaurant(RestaurantType.LUXURY,restaurants);
-                break;
-            default:
-                System.out.println("Incorrect input !!! please try again ");
-                searchRestaurantType(restaurants);
-                break;
-        }
-    }
-
-    public static void showFilteredRestaurant(RestaurantType type,ArrayList<Restaurant> restaurants){
-        for (int i = 0;i < restaurants.size();i++){
-            if(restaurants.get(i).getRestaurantType().equals(type)){
-                System.out.println( i + ")" + restaurants.get(i).getName());
-            }
-        }
-    }
-
-    public static void showBestFood(ArrayList<Restaurant> restaurants){
+    public static void showBestFood(ArrayList<Market> markets){
+        ArrayList<Restaurant> restaurants = findRestaurants(markets);
         if(restaurants.size() == 0){
             System.out.println("There are no active restaurant !!");
             return;
         }
         System.out.println("Which one ?");
-        OrderDuty.showRestaurants(restaurants,false);
+        OrderDuty.showMarkets(markets,false,1);
         int choice = ScannerWrapper.getInstance().nextInt();
-        showBestFoodsOfMenu(restaurants.get(choice));
+        showBestFoodsOfMenu((Restaurant) markets.get(choice));
+    }
+
+    public static ArrayList<Restaurant> findRestaurants(ArrayList<Market> markets){
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        for (int i=0;i< markets.size();i++){
+            if (markets.get(i) instanceof Restaurant){
+                restaurants.add(((Restaurant) markets.get(i)));
+            }
+        }
+        return restaurants;
     }
 
     public static void showBestFoodsOfMenu(Restaurant restaurant){
-        for (int i = 0;i < restaurant.getFoodMenu().size();i++){
-            for(int j = 0;j < restaurant.getFoodMenu().size() - 1 - i;j++){
-                if ( restaurant.getFoodMenu().get(i).getScore() < restaurant.getFoodMenu().get(i+1).getScore() ){
-                    Food tmp = restaurant.getFoodMenu().get(i+1);
-                    restaurant.getFoodMenu().set(i+1,restaurant.getFoodMenu().get(i));
-                    restaurant.getFoodMenu().set(i,tmp);
+        for (int i = 0;i < restaurant.getProducts().size();i++){
+            for(int j = 0;j < restaurant.getProducts().size() - 1 - i;j++){
+                if ( restaurant.getProducts().get(i).getScore() < restaurant.getProducts().get(i+1).getScore() ){
+                    Product tmp = restaurant.getProducts().get(i+1);
+                    restaurant.getProducts().set(i+1,restaurant.getProducts().get(i));
+                    restaurant.getProducts().set(i,tmp);
                 }
             }
         }
         restaurant.showFoodMenu();
     }
 
-    public static void showBestRestaurantsForMentionedFood(ArrayList<Restaurant> restaurants,ArrayList<Food> foods){
+    public static void showBestRestaurantsForMentionedFood(ArrayList<Market> markets,ArrayList<> foods){
         if(restaurants.size() == 0){
             System.out.println("There are no active restaurant !!");
             return;

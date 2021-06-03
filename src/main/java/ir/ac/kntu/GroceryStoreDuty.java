@@ -146,4 +146,39 @@ public class GroceryStoreDuty {
         products.add(new Fruit(tempName,tempPrice));
         return new Fruit(tempName,tempPrice);
     }
+
+    public static void showBestFruit(ArrayList<Market> markets){
+        ArrayList<GroceryStore> groceryStores = findGroceryStores(markets);
+        if(groceryStores.size() == 0){
+            System.out.println("There are no active grocery store !!");
+            return;
+        }
+        System.out.println("Which one ?");
+        OrderDuty.showMarkets(markets,false,3);
+        int choice = ScannerWrapper.getInstance().nextInt();
+        showBestFoodsOfGroceryStore((GroceryStore) markets.get(choice));
+    }
+
+    public static ArrayList<GroceryStore> findGroceryStores(ArrayList<Market> markets){
+        ArrayList<GroceryStore> groceryStores = new ArrayList<>();
+        for (int i=0;i< markets.size();i++){
+            if (markets.get(i) instanceof GroceryStore){
+                groceryStores.add(((GroceryStore) markets.get(i)));
+            }
+        }
+        return groceryStores;
+    }
+
+    public static void showBestFoodsOfGroceryStore(GroceryStore groceryStore){
+        for (int i = 0;i < groceryStore.getProducts().size();i++){
+            for(int j = 0;j < groceryStore.getProducts().size() - 1 - i;j++){
+                if ( groceryStore.getProducts().get(i).getScore() < groceryStore.getProducts().get(i+1).getScore() ){
+                    Product tmp = groceryStore.getProducts().get(i+1);
+                    groceryStore.getProducts().set(i+1,groceryStore.getProducts().get(i));
+                    groceryStore.getProducts().set(i,tmp);
+                }
+            }
+        }
+        groceryStore.showProducts();
+    }
 }

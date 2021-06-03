@@ -19,10 +19,10 @@ public class Search {
                 searchRestaurant();
                 break;
             case 2:
-                //searchSuperMarket();
+                searchSuperMarket();
                 break;
             case 3:
-                //searchGroceryStore();
+                searchGroceryStore();
                 break;
             default:
                 return;
@@ -107,4 +107,53 @@ public class Search {
         return restaurants;
     }
 
+    public void searchSuperMarket(){
+        ArrayList<SuperMarket> superMarkets = findSuperMarkets();
+        if (superMarkets.size() == 0){
+            System.out.println("There are no active super market !!");
+            return;
+        }
+        System.out.println("Enter the name of the SuperMarket : ");
+        String tempName = ScannerWrapper.getInstance().nextLine();
+        for (int i=0;i< superMarkets.size();i++){
+            if (superMarkets.get(i).getName().equals(tempName)){
+                System.out.println(i + ") " + superMarkets.get(i).getName());
+            }
+        }
+    }
+
+    public ArrayList<SuperMarket> findSuperMarkets(){
+        ArrayList<SuperMarket> superMarkets = new ArrayList<>();
+        for (int i=0;i< markets.size();i++){
+            if (markets.get(i) instanceof SuperMarket){
+                superMarkets.add((SuperMarket) markets.get(i));
+            }
+        }
+        return superMarkets;
+    }
+
+    public void searchGroceryStore(){
+        ArrayList<GroceryStore> groceryStores = findGroceryStores();
+        if (groceryStores.size() == 0){
+            System.out.println("There are no active grocery store !!");
+            return;
+        }
+        System.out.println("Enter the name of the grocery store : ");
+        String tempName = ScannerWrapper.getInstance().nextLine();
+        for (int i=0;i< groceryStores.size();i++){
+            if (groceryStores.get(i).getName().equals(tempName)){
+                System.out.println(i + ") " + groceryStores.get(i).getName());
+            }
+        }
+    }
+
+    public ArrayList<GroceryStore> findGroceryStores(){
+        ArrayList<GroceryStore> groceryStores = new ArrayList<>();
+        for (int i=0;i< markets.size();i++){
+            if (markets.get(i) instanceof GroceryStore){
+                groceryStores.add(((GroceryStore) markets.get(i)));
+            }
+        }
+        return groceryStores;
+    }
 }

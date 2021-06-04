@@ -26,12 +26,12 @@ public class AdminMenu {
 
     public void setShowMainMenu(){
         System.out.println("Enter your wished set to show these options in main menu : " +
-                "(for example 2314) ");
+                "(for example 23145) ");
         System.out.println(
                 "1) Orders Menu" +
                         "\n2) Settings" +
                         "\n3) Delivery Menu" +
-                        "\n4) Market Menu");
+                        "\n4) Market Menu" );
         int set = ScannerWrapper.getInstance().nextInt();
         setMenu.put(1,MenuOptions.ORDERS_MENU);
         setMenu.put(2,MenuOptions.SETTINGS);
@@ -433,4 +433,5 @@ public class AdminMenu {
         }
         customersMenu(manager);
     }
+
 }

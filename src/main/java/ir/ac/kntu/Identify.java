@@ -53,10 +53,64 @@ public class Identify {
         System.out.println("Enter your password: ");
         String tempPassWord = ScannerWrapper.getInstance().nextLine();
         if(verifyAdmin(tempUserName,tempPassWord)){
-            AdminMenu adminMenu = new AdminMenu();
-            adminMenu.start(manager);
+            adminHandler();
         }else{
             System.out.println("There are no admin with the given information !!");
+        }
+    }
+
+    public void adminHandler(){
+        System.out.println("As an admin , select what do you want " +
+                "\n1) Admin stuff" +
+                "\n2) Market stuff" +
+                "\n3) Exit");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                AdminMenu adminMenu = new AdminMenu();
+                adminMenu.start(manager);
+                break;
+            case 2:
+                adminStuffMenu();
+                break;
+            case 3:
+                start();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                adminHandler();
+                break;
+        }
+    }
+
+    public void adminStuffMenu(){
+        System.out.println("What do you want ? " +
+                "\n1) Declare a new admin" +
+                "\n2) Show all of the admins" +
+                "\n3) Set an admin" +
+                "\n4) Exit");
+                adminStuffHandler(manager);
+    }
+
+    public void adminStuffHandler(Manager manager){
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                AdminDuty.declareAdmin(users);
+                break;
+            case 2:
+                AdminDuty.showAdmins(users);
+                break;
+            case 3:
+                AdminDuty.setDeclaredAdmin(users);
+                break;
+            case 4:
+                adminHandler();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                adminStuffMenu();
+                break;
         }
     }
 

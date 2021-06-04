@@ -28,15 +28,6 @@ public class Manager {
         this.orders.add(order);
     }
 
-    public void addRestaurant(Restaurant restaurant){
-        markets.add(restaurant);
-    }
-
-    public void addCustomers(Customer customer) {
-        this.customers.add(customer);
-        this.idCustomer.put(customer.getId(),customer);
-    }
-
     public ArrayList<Market> getMarkets(){
         return markets;
     }
@@ -49,10 +40,6 @@ public class Manager {
         return customers;
     }
 
-    public HashMap<Integer,Customer> getIdCustomer(){
-        return this.idCustomer;
-    }
-
     public ArrayList<Delivery> getDeliveries() {
         return this.deliveries;
     }
@@ -61,8 +48,8 @@ public class Manager {
         return this.comments;
     }
 
-    public ArrayList<Food> getFoods() {
-        return this.foods;
+    public ArrayList<Product> getProducts() {
+        return this.products;
     }
 
     public void orderFoodRestaurant(){
@@ -83,6 +70,15 @@ public class Manager {
 
     public void showRestaurants() {
         OrderDuty.showMarkets(markets,true,1);
+    }
+
+    public void showMarkets(){
+        if (markets.size() == 0){
+            System.out.println("There are no declared markets ");
+        }
+        for (int i=0;i< markets.size();i++){
+            System.out.println(i + ") " + markets.get(i).getName());
+        }
     }
 
     public void filterOrders(){
@@ -220,16 +216,75 @@ public class Manager {
         GroceryStoreDuty.showBestFruit(markets);
     }
 
-    public void showCommentOfFood(){
-        RestaurantDuty.showCommentOfFood(foods,comments);
+    public void showCommentOfProduct(){
+        if(products.size() == 0){
+            System.out.println("There are no products yet ");
+            return;
+        }
+
+        if(comments.size() == 0){
+            System.out.println("There are no comments yet ");
+            return;
+        }
+
+        System.out.println("Which product ? ");
+        showProducts();
+        int choice = ScannerWrapper.getInstance().nextInt();
+        for (int i=0;i< comments.size();i++){
+            if(comments.get(i).getSubject().equals(products.get(choice).getName())){
+                System.out.println( i + ")" + comments.get(i).getText());
+            }
+        }
     }
 
-    public void showBestRestaurantsForMentionedFood(){
-        RestaurantDuty.showBestRestaurantsForMentionedFood(markets,products);
+    public void showBestMarketForMentionedProduct(){
+        if(markets.size() == 0){
+            System.out.println("There are no active market !!");
+            return;
+        }
+
+        if(products.size() == 0){
+            System.out.println("There are no products yet ");
+            return;
+        }
+
+        System.out.println("Select the product : ");
+        showProducts();
+        int choice = ScannerWrapper.getInstance().nextInt();
+        ArrayList<Market> newMarkets = new ArrayList<>();
+        HashMap<Market,Integer> marketIndex = new HashMap<>();
+        for (int i = 0;i < markets.size();i++){
+            for (int j=0;j<markets.get(i).getProducts().size();j++){
+                if ( markets.get(i).getProducts().get(j).getName().equals(products.get(choice).getName())){
+                    newMarkets.add(markets.get(i));
+                    marketIndex.put(markets.get(i),j);
+                }
+            }
+        }
+
+        for (int i=0;i< newMarkets.size();i++){
+            for (int j=0;j<newMarkets.size() - 1 - i;j++){
+                if ( newMarkets.get(i).getProducts().get(marketIndex.get(newMarkets.get(i))).getScore() <
+                        newMarkets.get(i+1).getProducts().get(marketIndex.get(newMarkets.get(i+1))).getScore() ){
+                    Market tmp = newMarkets.get(i);
+                    newMarkets.set(i,newMarkets.get(i+1));
+                    newMarkets.set(i+1,tmp);
+                }
+            }
+        }
+        for (int i=0;i<newMarkets.size();i++){
+            System.out.println(i + ")" + newMarkets.get(i).getName());
+        }
     }
 
-    public void showFoods(){
-        RestaurantDuty.showFoods(foods);
+    public void showProducts(){
+        if (products.size() == 0){
+            System.out.println("There are no products yet !!");
+            return;
+        }
+        for (int i=0;i< products.size();i++){
+            System.out.println(i + ") " + products.get(i).getName());
+        }
     }
 
     public void declareDelivery(){
@@ -244,6 +299,10 @@ public class Manager {
         DeliveryDuty.setDeclaredDeliveries(deliveries);
     }
 
+    public void showOrdersOfDelivery(){
+        DeliveryDuty.showOrdersOfDelivery(deliveries);
+    }
+
     public int findIndexOrder(Order order){
         for(int i=0;i< orders.size();i++){
             if(orders.get(i).equals(order)){
@@ -251,9 +310,5 @@ public class Manager {
             }
         }
         return 1;
-    }
-
-    public void showOrdersOfDelivery(){
-        DeliveryDuty.showOrdersOfDelivery(deliveries);
     }
 }

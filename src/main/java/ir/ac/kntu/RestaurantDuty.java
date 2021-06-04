@@ -222,47 +222,6 @@ public class RestaurantDuty {
         restaurant.showFoodMenu();
     }
 
-    public static void showBestRestaurantsForMentionedFood(ArrayList<Market> markets,ArrayList<> foods){
-        if(restaurants.size() == 0){
-            System.out.println("There are no active restaurant !!");
-            return;
-        }
-
-        if(foods.size() == 0){
-            System.out.println("There are no foods yet ");
-            return;
-        }
-
-        System.out.println("Select the food : ");
-        showFoods(foods);
-        int choice = ScannerWrapper.getInstance().nextInt();
-        ArrayList<Restaurant> res = new ArrayList<>();
-        HashMap<Restaurant,Integer> resIndex = new HashMap<>();
-        for (int i = 0;i < restaurants.size();i++){
-            for (int j=0;j<restaurants.get(i).getFoodMenu().size();j++){
-                if ( restaurants.get(i).getFoodMenu().get(j).getName().equals(foods.get(choice).getName())){
-                    res.add(restaurants.get(i));
-                    resIndex.put(restaurants.get(i),j);
-                }
-            }
-        }
-
-        for (int i=0;i< res.size();i++){
-            for (int j=0;j<res.size() - 1 - i;j++){
-                if ( res.get(i).getFoodMenu().get(resIndex.get(res.get(i))).getScore() <
-                        res.get(i+1).getFoodMenu().get(resIndex.get(res.get(i+1))).getScore() ){
-                    Restaurant tmp = res.get(i);
-                    res.set(i,res.get(i+1));
-                    res.set(i+1,tmp);
-                }
-            }
-        }
-        for (int i=0;i<res.size();i++){
-            System.out.println("A");
-            System.out.println(i + ")" + res.get(i).getName());
-        }
-    }
-
     public static void showFoods(ArrayList<Food> foods){
         if(foods.size() == 0){
             System.out.println("There are no food yet ");

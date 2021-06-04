@@ -55,7 +55,7 @@ public class AdminMenu {
         }else if(choice == MenuOptions.DELIVERY_MENU.getRate()){
             deliveryMenu(manager);
         }else if(choice == MenuOptions.MARKET_MENU.getRate()){
-            restaurantsMenu(manager);
+            marketsMenu(manager);
         }else if(choice == 5){
             return false;
         }else{
@@ -81,7 +81,7 @@ public class AdminMenu {
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
-                manager.orderFood();
+                orderProductMarket(manager);
                 break;
             case 2:
                 manager.filterOrders();
@@ -99,7 +99,7 @@ public class AdminMenu {
                 manager.showOrders();
                 break;
             case 7:
-                manager.setOrderFood();
+                setOrderProductMarket(manager);
                 break;
             case 8:
                 mainMenu(manager);
@@ -109,6 +109,46 @@ public class AdminMenu {
                 break;
         }
         mainMenu(manager);
+    }
+
+    public void orderProductMarket(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.orderFoodRestaurant();
+                break;
+            case 2:
+                manager.orderFoodSuperMarket();
+                break;
+            case 3:
+                manager.orderFoodGrocery();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                orderProductMarket(manager);
+                break;
+        }
+    }
+
+    public void setOrderProductMarket(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.setOrderFoodRestaurant();
+                break;
+            case 2:
+                manager.setOrderFoodSuperMarket();
+                break;
+            case 3:
+                manager.setOrderFruit();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                setOrderProductMarket(manager);
+                break;
+        }
     }
 
     public void deliveryMenu(Manager manager){
@@ -147,9 +187,193 @@ public class AdminMenu {
         deliveryMenu(manager);
     }
 
-    public void restaurantsMenu(Manager manager){
+    public void marketsMenu(Manager manager){
+        System.out.println("What do you want to do ?" +
+                "\n1) Show active markets" +
+                "\n2) Declare a new market" +
+                "\n3) Edit active markets" +
+                "\n4) Add delivery to a market" +
+                "\n5) Show the score of a market" +
+                "\n6) Show the comments of a market" +
+                "\n7) Add a product to the market's menu" +
+                "\n8) Show declared products " +
+                "\n9) Search market " +
+                "\n10) Show comments of a particular product " +
+                "\n11) Show best products of a market " +
+                "\n12) Show best markets for each product " +
+                "\n13) Exit ");
+        marketsMenuHandler(manager);
     }
 
+    public void marketsMenuHandler(Manager manager){
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.showMarkets();
+                break;
+            case 2:
+                declareMarket(manager);
+                break;
+            case 3:
+                editMarket(manager);
+                break;
+            case 4:
+                addDelivery(manager);
+                break;
+            case 5:
+                manager.showRestaurantScore();
+                break;
+            case 6:
+                manager.showRestaurantComments();
+                break;
+            case 7:
+                addProduct(manager);
+                break;
+            case 8:
+                manager.showProducts();
+                break;
+            case 9:
+                searchMarket(manager);
+                break;
+            case 10:
+                manager.showCommentOfProduct();
+                break;
+            case 11:
+                showBestProduct(manager);
+                break;
+            case 12:
+                manager.showBestMarketForMentionedProduct();
+                break;
+            case 13:
+                mainMenu(manager);
+                return;
+            default:
+                System.out.println("Incorrect choice ");
+                marketsMenu(manager);
+                break;
+        }
+        marketsMenu(manager);
+    }
+
+    public void declareMarket(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.declareRestaurant();
+                break;
+            case 2:
+                manager.declareSuperMarket();
+                break;
+            case 3:
+                manager.declareGroceryStore();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                declareMarket(manager);
+                break;
+        }
+    }
+
+    public void editMarket(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.editRestaurant();
+                break;
+            case 2:
+                manager.editSuperMarket();
+                break;
+            case 3:
+                manager.editGroceryStore();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                editMarket(manager);
+                break;
+        }
+    }
+
+    public void addDelivery(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.addDeliveryRestaurant();
+                break;
+            case 2:
+                manager.addDeliverySuperMarket();
+                break;
+            case 3:
+                manager.addDeliveryGroceryStore();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                addDelivery(manager);
+                break;
+        }
+    }
+
+    public void addProduct(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.addFoodRestaurant();
+                break;
+            case 2:
+                manager.addFoodSuperMarket();
+                break;
+            case 3:
+                manager.addFruit();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                addProduct(manager);
+                break;
+        }
+    }
+
+    public void searchMarket(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.searchRestaurant();
+                break;
+            case 2:
+                manager.searchSuperMarket();
+                break;
+            case 3:
+                manager.searchGroceryStore();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                searchMarket(manager);
+                break;
+        }
+    }
+
+    public void showBestProduct(Manager manager){
+        System.out.println("Select the market : ( 1- Restaurant  2- Supermarket  3-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                manager.showBestFoodRestaurant();
+                break;
+            case 2:
+                manager.showBestFoodSuperMarket();
+                break;
+            case 3:
+                manager.showBestFruit();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                showBestProduct(manager);
+                break;
+        }
+    }
 
     public void settings(Manager manager){
         System.out.println("What do you want to do?" +

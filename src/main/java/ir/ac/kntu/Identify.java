@@ -53,7 +53,8 @@ public class Identify {
         System.out.println("Enter your password: ");
         String tempPassWord = ScannerWrapper.getInstance().nextLine();
         if(verifyAdmin(tempUserName,tempPassWord)){
-            selectAdminMenu(tempUserName);
+            AdminMenu adminMenu = new AdminMenu();
+            adminMenu.start(manager);
         }else{
             System.out.println("There are no admin with the given information !!");
         }
@@ -67,28 +68,6 @@ public class Identify {
             }
         }
         return false;
-    }
-
-    public void selectAdminMenu(String tempUserName){
-        System.out.println("Select the market ( 1- Restaurant  2-SuperMarket  3-Grocery Store ) : ");
-        int choice = ScannerWrapper.getInstance().nextInt();
-        switch (choice){
-            case 1:
-                AdminRestaurantMenu adminRestaurantMenu = new AdminRestaurantMenu();
-                adminRestaurantMenu.start(manager);
-                break;
-            case 2:
-                AdminSuperMarketMenu adminSuperMarketMenu = new AdminSuperMarketMenu();
-                adminSuperMarketMenu.start(manager);
-                break;
-            case 3:
-                //AdminGroceryMenu();
-                break;
-            default:
-                System.out.println("Incorrect input !! please try again ");
-                selectAdminMenu(tempUserName);
-                break;
-        }
     }
 
     public void customerIdentify(){

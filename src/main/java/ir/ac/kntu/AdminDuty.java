@@ -15,10 +15,11 @@ public class AdminDuty {
         System.out.println("<<<<< Done >>>>>");
     }
 
-    ublic static void showAdmins(ArrayList<User> users){
-        ArrayList<Admin> admins = findAdmins(users);
-        for (int i=0;i< admins.size();i++){
-            System.out.println(i + ") " + admins.get(i).getUserName());
+    public static void showAdmins(ArrayList<User> users){
+        for (int i=0;i< users.size();i++){
+            if (users.get(i) instanceof Admin){
+                System.out.println(i + ") " + users.get(i).getUserName());
+            }
         }
     }
 
@@ -33,8 +34,42 @@ public class AdminDuty {
     }
 
     public static void setDeclaredAdmin(ArrayList<User> users){
-        ArrayList<Admin> admins = findAdmins(users);
         System.out.println("Which one ? ");
-
+        showAdmins(users);
+        int choice = ScannerWrapper.getInstance().nextInt();
+        setDeclaredAdminHandler((Admin) users.get(choice));
     }
+
+    public static void setDeclaredAdminHandler(Admin admin){
+        System.out.println("What do you want to change ?" +
+                "\n1) Username" +
+                "\n2) Password" +
+                "\n3) Id ");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                System.out.println("Enter the new username : ");
+                String newUserName = ScannerWrapper.getInstance().nextLine();
+                admin.setUserName(newUserName);
+                System.out.println("<<<<< Done >>>>>");
+                break;
+            case 2:
+                System.out.println("Enter the new password : ");
+                String newPassWord = ScannerWrapper.getInstance().nextLine();
+                admin.setPassWord(newPassWord);
+                System.out.println("<<<<< Done >>>>>");
+                break;
+            case 3:
+                System.out.println("Enter the new id : ");
+                int newId = ScannerWrapper.getInstance().nextInt();
+                admin.setId(newId);
+                System.out.println("<<<<< Done >>>>>");
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                setDeclaredAdminHandler(admin);
+                break;
+        }
+    }
+
 }

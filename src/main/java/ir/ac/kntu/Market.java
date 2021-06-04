@@ -3,6 +3,7 @@ package ir.ac.kntu;
 import java.util.ArrayList;
 
 public class Market {
+    private MarketBoss marketBoss;
     private String name;
     private String address;
     private ArrayList<Order> orders;
@@ -31,6 +32,10 @@ public class Market {
         orders = new ArrayList<>();
         comments = new ArrayList<>();
         deliveries = new ArrayList<>();
+    }
+
+    public void setMarketBoss(MarketBoss marketBoss) {
+        this.marketBoss = marketBoss;
     }
 
     public void setProducts(ArrayList<Product> products) {
@@ -106,6 +111,10 @@ public class Market {
 
     public void setDeliveryMultiplicity(int deliveryMultiplicity) {
         this.deliveryMultiplicity = deliveryMultiplicity;
+    }
+
+    public MarketBoss getMarketBoss() {
+        return marketBoss;
     }
 
     public ArrayList<Delivery> getDeliveries(){
@@ -203,6 +212,45 @@ public class Market {
     public void showProducts(){
         for (int i=0;i< products.size();i++){
             System.out.println(i + ") " + products.get(i).getName());
+        }
+    }
+
+    public void editMarket(){
+        System.out.println("Which one do you want to change ? " +
+                "\n1) Name" +
+                "\n2) Address" +
+                "\n3) Open time" +
+                "\n4) Close time" );
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                System.out.println("Enter the new name : ");
+                String newName = ScannerWrapper.getInstance().nextLine();
+                setName(newName);
+                System.out.println("<<<<< Done >>>>>");
+                break;
+            case 2:
+                System.out.println("Enter the new Address:");
+                String newAddress = ScannerWrapper.getInstance().nextLine();
+                setAddress(newAddress);
+                System.out.println("Market Address changed .");
+                break;
+            case 3:
+                System.out.println("Enter the new open time:");
+                double newOpenTime = ScannerWrapper.getInstance().nextDouble();
+                setOpenTime(newOpenTime);
+                System.out.println("Market Open time changed .");
+                break;
+            case 4:
+                System.out.println("Enter the new close time:");
+                double newCloseTime = ScannerWrapper.getInstance().nextDouble();
+                setCloseTime(newCloseTime);
+                System.out.println("Market Close time changed .");
+                break;
+            default:
+                System.out.println("Incorrect input !! try again ");
+                editMarket();
+                break;
         }
     }
 

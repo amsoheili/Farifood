@@ -44,6 +44,10 @@ public class Customer extends User{
         return address;
     }
 
+    public ArrayList<Comment> getComments(){
+        return comments;
+    }
+
     public ArrayList<Order> getOrders() {
         return orders;
     }

@@ -129,21 +129,23 @@ public class Identify {
         String tempUserName = ScannerWrapper.getInstance().nextLine();
         System.out.println("Enter your password: ");
         String tempPassWord = ScannerWrapper.getInstance().nextLine();
-        if(verifyCustomer(tempUserName,tempPassWord)){
-            //CustomerMenu.start();
+        Customer customer = recognizeCustomer(tempUserName,tempPassWord);
+        if(customer != null){
+            CustomerMenu customerMenu = new CustomerMenu(customer);
+            customerMenu.mainMenu(manager);
         }else{
             System.out.println("There are no customer with the given information !!");
         }
     }
 
-    public boolean verifyCustomer(String tempUserName,String tempPassWord){
+    public Customer recognizeCustomer(String tempUserName,String tempPassWord){
         for(User user:users){
             if (user instanceof Customer && user.getUserName().equals(tempUserName)
                     && user.getPassWord().equals(tempPassWord)){
-                return true;
+                return (Customer) user;
             }
         }
-        return false;
+        return null;
     }
 
     public void marketBossIdentify(){

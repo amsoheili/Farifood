@@ -44,13 +44,13 @@ public class CustomerMenu {
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
-                manager.orderFoodRestaurant();
+                manager.orderFoodRestaurant(customer);
                 break;
             case 2:
-                manager.orderFoodSuperMarket();
+                manager.orderFoodSuperMarket(customer);
                 break;
             case 3:
-                manager.orderFoodGrocery();
+                manager.orderFruitGrocery(customer);
                 break;
             default:
                 System.out.println("Incorrect input !! please try again ");

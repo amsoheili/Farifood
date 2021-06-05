@@ -9,7 +9,7 @@ public class OrderDuty {
     OrderDuty() {
     }
 
-    public static void orderSth(ArrayList<Market> markets, ArrayList<Order> orders,int marketCode){
+    public static void orderSth(ArrayList<Market> markets, ArrayList<Order> orders,int marketCode,User user){
         switch (marketCode){
             case 1:
                 ArrayList<Market> restaurants = new ArrayList<>();
@@ -18,7 +18,7 @@ public class OrderDuty {
                         restaurants.add((Restaurant) market);
                     }
                 }
-                orderSthHandler(restaurants,orders,marketCode);
+                orderSthHandler(restaurants,orders,marketCode,user);
                 break;
             case 2:
                 ArrayList<Market> superMarkets = new ArrayList<>();
@@ -27,7 +27,7 @@ public class OrderDuty {
                         superMarkets.add((Restaurant) market);
                     }
                 }
-                orderSthHandler(superMarkets,orders,marketCode);
+                orderSthHandler(superMarkets,orders,marketCode,user);
                 break;
             case 3:
                 //orderFruit
@@ -37,26 +37,26 @@ public class OrderDuty {
                         groceryStores.add((Restaurant) market);
                     }
                 }
-                orderSthHandler(groceryStores,orders,marketCode);
+                orderSthHandler(groceryStores,orders,marketCode,user);
                 break;
             default:
                 return;
         }
     }
-    public static void orderSthHandler(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode) {
+    public static void orderSthHandler(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode,User user) {
         if (markets == null) {
-            System.out.println("There are no active restaurant.");
+            System.out.println("There are no active markets.");
             return;
         } else {
-            System.out.println("Which restaurant ?");
+            System.out.println("Which market ?");
             showMarkets(markets,true,marketCode);
         }
-        int choseRestaurant = ScannerWrapper.getInstance().nextInt();
-        if (markets.get(choseRestaurant).getProducts().size() == 0) {
-            System.out.println("Food menu is empty.");
+        int choseMarket = ScannerWrapper.getInstance().nextInt();
+        if (markets.get(choseMarket).getProducts().size() == 0) {
+            System.out.println("product list is empty.");
             return;
         } else {
-            markets.get(choseRestaurant).orderProduct(orders);
+            markets.get(choseMarket).orderProduct(orders,user);
         }
     }
 

@@ -53,47 +53,68 @@ public class Identify {
         String tempUserName = ScannerWrapper.getInstance().nextLine();
         System.out.println("Enter your password: ");
         String tempPassWord = ScannerWrapper.getInstance().nextLine();
-        if(verifyAdmin(tempUserName,tempPassWord)){
-            adminHandler();
+        Admin currentAdmin = findAdmin(tempUserName,tempPassWord);
+        if(currentAdmin != null){
+            adminHandler(currentAdmin);
         }else{
             System.out.println("There are no admin with the given information !!");
         }
     }
 
-    public void adminHandler(){
+    public Admin findAdmin(String tempUserName,String tempPassWord){
+        for(User user:users){
+            if (user instanceof Admin && user.getUserName().equals(tempUserName)
+                    && user.getPassWord().equals(tempPassWord)){
+                return (Admin) user;
+            }
+        }
+        return null;
+    }
+
+    public void adminHandler(Admin currentAdmin){
         System.out.println("As an admin , select what do you want " +
                 "\n1) Admin stuff" +
                 "\n2) Market stuff" +
-                "\n3) Exit");
+                "\n3) Show users" +
+                "\n4) Exit");
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
-                AdminMenu adminMenu = new AdminMenu();
-                adminMenu.start(manager);
+                adminStuffMenu(currentAdmin);
                 break;
             case 2:
-                adminStuffMenu();
+                AdminMenu adminMenu = new AdminMenu(currentAdmin);
+                adminMenu.start(manager);
                 break;
             case 3:
+                showUsers();
+                break;
+            case 4:
                 start();
                 break;
             default:
                 System.out.println("Incorrect input !! please try again ");
-                adminHandler();
+                adminHandler(currentAdmin);
                 break;
         }
     }
 
-    public void adminStuffMenu(){
+    public void showUsers(){
+        for (int i=0;i<users.size();i++){
+            System.out.println(i + ") " + users.get(i).getUserName());
+        }
+    }
+
+    public void adminStuffMenu(Admin currentAdmin){
         System.out.println("What do you want ? " +
                 "\n1) Declare a new admin" +
                 "\n2) Show all of the admins" +
                 "\n3) Set an admin" +
                 "\n4) Exit");
-                adminStuffHandler(manager);
+                adminStuffHandler(manager,currentAdmin);
     }
 
-    public void adminStuffHandler(Manager manager){
+    public void adminStuffHandler(Manager manager,Admin currentAdmin){
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
@@ -106,11 +127,11 @@ public class Identify {
                 AdminDuty.setDeclaredAdmin(users);
                 break;
             case 4:
-                adminHandler();
+                adminHandler(currentAdmin);
                 break;
             default:
                 System.out.println("Incorrect input !! please try again ");
-                adminStuffMenu();
+                adminStuffMenu(currentAdmin);
                 break;
         }
     }
@@ -159,10 +180,8 @@ public class Identify {
             MarketBossMenu marketBossMenu = new MarketBossMenu(findBossMarket(tempMarketBoss));
             marketBossMenu.mainMenu(manager);
         }else{
-            System.out.println("There are no restaurant boss with the given information !!");
+            System.out.println("There are no boss with the given information !!");
         }
-
-
     }
 
     public MarketBoss recognizeMarketBoss(String tempUserName,String tempPassWord){

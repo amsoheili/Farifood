@@ -3,8 +3,11 @@ package ir.ac.kntu;
 import java.util.HashMap;
 
 public class AdminMenu {
+    Admin admin;
 
-    AdminMenu(){ }
+    AdminMenu(Admin admin){
+        this.admin = admin;
+    }
 
     private HashMap<Integer,MenuOptions> setMenu = new HashMap<>();
 
@@ -116,13 +119,13 @@ public class AdminMenu {
         int choice = ScannerWrapper.getInstance().nextInt();
         switch (choice){
             case 1:
-                manager.orderFoodRestaurant();
+                manager.orderFoodRestaurant(admin);
                 break;
             case 2:
-                manager.orderFoodSuperMarket();
+                manager.orderFoodSuperMarket(admin);
                 break;
             case 3:
-                manager.orderFoodGrocery();
+                manager.orderFruitGrocery(admin);
                 break;
             default:
                 System.out.println("Incorrect input !! please try again ");

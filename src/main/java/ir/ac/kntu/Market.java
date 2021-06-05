@@ -173,7 +173,7 @@ public class Market {
         }
     }
 
-    public void orderProduct(ArrayList<Order> orders){
+    public void orderProduct(ArrayList<Order> orders,User user){
     }
 
     public void setOrderStatus(Manager manager){

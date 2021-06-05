@@ -48,4 +48,22 @@ public class User {
                 "User name : " + userName + "\n" +
                 "Pass Word : " + passWord;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (!(o instanceof User)){
+            return false;
+        }
+        User u = (User)o;
+        if (this.id != u.getId()){
+            return false;
+        }
+        if (!this.userName.equals(u.getUserName())){
+            return false;
+        }
+        if (!this.passWord.equals(u.getPassWord())){
+            return false;
+        }
+        return true;
+    }
 }

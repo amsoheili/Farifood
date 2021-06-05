@@ -15,7 +15,7 @@ public class MarketBossMenu {
                 "\n4) Show deliveries" +
                 "\n5) Show orders" +
                 "\n6) Add products" +
-                "\n9) Exit");
+                "\n7) Exit");
         mainMenuHandler(manager);
     }
 
@@ -40,11 +40,14 @@ public class MarketBossMenu {
             case 6:
                 market.addProduct(manager.getProducts());
                 break;
+            case 7:
+                return;
             default:
                 System.out.println("Incorrect input !! please try again ");
                 mainMenu(manager);
                 break;
         }
+        mainMenu(manager);
     }
 
 

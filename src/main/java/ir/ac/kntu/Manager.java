@@ -59,16 +59,16 @@ public class Manager {
         return this.products;
     }
 
-    public void orderFoodRestaurant(){
-        OrderDuty.orderSth(markets,orders,1);
+    public void orderFoodRestaurant(User user){
+        OrderDuty.orderSth(markets,orders,1,user);
     }
 
-    public void orderFoodSuperMarket(){
-        OrderDuty.orderSth(markets,orders,2);
+    public void orderFoodSuperMarket(User user){
+        OrderDuty.orderSth(markets,orders,2,user);
     }
 
-    public void orderFoodGrocery(){
-        OrderDuty.orderSth(markets,orders,3);
+    public void orderFruitGrocery(User user){
+        OrderDuty.orderSth(markets,orders,3,user);
     }
 
     public void showOrders(){

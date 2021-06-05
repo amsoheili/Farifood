@@ -29,9 +29,10 @@ public class GroceryStoreDuty {
     }
 
     public static MarketBoss declareGroceryStoreBoss(Manager manager){
-        System.out.println("Enter the name : ");
+        System.out.println("Declaring the grocery store boss" +
+                "\nEnter the username : ");
         String tempUserName = ScannerWrapper.getInstance().nextLine();
-        System.out.println("Enter the username : ");
+        System.out.println("Enter the password : ");
         String tempPassWord = ScannerWrapper.getInstance().nextLine();
         System.out.println("Enter the id : ");
         int tempId = ScannerWrapper.getInstance().nextInt();

@@ -17,7 +17,7 @@ public class Identify {
         System.out.println("Who are you ?" +
                 "\n1) Admin" +
                 "\n2) Customer" +
-                "\n3) Restaurant boss" +
+                "\n3) Market boss" +
                 "\n4) Exit");
         return startHandler();
     }

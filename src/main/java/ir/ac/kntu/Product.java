@@ -1,5 +1,7 @@
 package ir.ac.kntu;
 
+import java.util.Objects;
+
 public class Product {
     private String name;
     private double price;
@@ -58,5 +60,39 @@ public class Product {
                 this.name +
                 "\nPrice : " +
                 this.price;
+    }
+
+//    @Override
+//    public boolean equals(Object o){
+//        if (!(o instanceof Product)){
+//            return false;
+//        }
+//        Product p = (Product) o;
+//        if (!p.getName().equals(getName())){
+//            return false;
+//        }
+//        if (p.getPrice() != (getPrice())){
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public int hashCode(){
+//        return (int)price;
+//    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return Double.compare(product.getPrice(), getPrice()) == 0 && getScore() == product.getScore() && Objects.equals(getName(), product.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getPrice(), getScore());
     }
 }

@@ -16,12 +16,15 @@ public class SuperMarketDuty {
         int tempCloseTime = ScannerWrapper.getInstance().nextInt();
         System.out.println("Delivery multiplicity: ");
         int tempDeliveryMultiplicity = ScannerWrapper.getInstance().nextInt();
+        System.out.println("Enter the max number of orders in each period");
+        int maxOrderPerEachPeriod = ScannerWrapper.getInstance().nextInt();
         if (manager.getMarkets().contains(new SuperMarket(tempName, tempAddress, tempOpenTime,
-                tempCloseTime, tempDeliveryMultiplicity))) {
+                tempCloseTime, tempDeliveryMultiplicity,maxOrderPerEachPeriod))) {
             System.out.println("This supermarket has been declared before !!");
             return;
         } else {
-            SuperMarket tempSuperMarket = new SuperMarket(tempName, tempAddress, tempOpenTime, tempCloseTime, tempDeliveryMultiplicity);
+            SuperMarket tempSuperMarket = new SuperMarket(tempName, tempAddress, tempOpenTime,
+                    tempCloseTime, tempDeliveryMultiplicity,maxOrderPerEachPeriod);
             tempSuperMarket.setMarketBoss(declareSuperMarketBoss(manager));
             manager.getMarkets().add(tempSuperMarket);
             System.out.println("<<<<<< Done >>>>>>>");

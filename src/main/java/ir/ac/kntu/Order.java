@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Order {
     private Product product;
     private OrderStatus status;
+    private OrderPeriod orderPeriod;
 
     Order() { }
 
@@ -12,6 +13,15 @@ public class Order {
         this.product = product;
         this.status = status;
     }
+
+    public void setOrderPeriod(OrderPeriod orderPeriod) {
+        this.orderPeriod = orderPeriod;
+    }
+
+    public OrderPeriod getOrderPeriod() {
+        return orderPeriod;
+    }
+
     public void setProduct(Product product) {
         this.product = product;
     }
@@ -31,7 +41,8 @@ public class Order {
     @Override
     public String toString(){
         return "\nfood name: " + product.getName() +
-                "\nStatus: " + status;
+                "\nStatus: " + status +
+                (orderPeriod!=null ? orderPeriod.toString() : "No order period");
     }
 
     @Override

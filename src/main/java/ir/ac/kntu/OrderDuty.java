@@ -10,38 +10,39 @@ public class OrderDuty {
     }
 
     public static void orderSth(ArrayList<Market> markets, ArrayList<Order> orders,int marketCode,User user){
-        switch (marketCode){
-            case 1:
-                ArrayList<Market> restaurants = new ArrayList<>();
-                for (Market market:markets){
-                    if (market instanceof Restaurant){
-                        restaurants.add((Restaurant) market);
-                    }
-                }
-                orderSthHandler(restaurants,orders,marketCode,user);
-                break;
-            case 2:
-                ArrayList<Market> superMarkets = new ArrayList<>();
-                for (Market market:markets){
-                    if (market instanceof SuperMarket){
-                        superMarkets.add((Restaurant) market);
-                    }
-                }
-                orderSthHandler(superMarkets,orders,marketCode,user);
-                break;
-            case 3:
-                //orderFruit
-                ArrayList<Market> groceryStores = new ArrayList<>();
-                for (Market market:markets){
-                    if (market instanceof GroceryStore){
-                        groceryStores.add((Restaurant) market);
-                    }
-                }
-                orderSthHandler(groceryStores,orders,marketCode,user);
-                break;
-            default:
-                return;
-        }
+//        switch (marketCode){
+//            case 1:
+////                ArrayList<Market> restaurants = new ArrayList<>();
+////                for (Market market:markets){
+////                    if (market instanceof Restaurant){
+////                        restaurants.add((Restaurant) market);
+////                    }
+////                }
+//                orderSthHandler(markets,orders,marketCode,user);
+//                break;
+//            case 2:
+////                ArrayList<Market> superMarkets = new ArrayList<>();
+////                for (Market market:markets){
+////                    if (market instanceof SuperMarket){
+////                        superMarkets.add((SuperMarket) market);
+////                    }
+////                }
+//                orderSthHandler(markets,orders,marketCode,user);
+//                break;
+//            case 3:
+//                //orderFruit
+//                ArrayList<Market> groceryStores = new ArrayList<>();
+//                for (Market market:markets){
+//                    if (market instanceof GroceryStore){
+//                        groceryStores.add((GroceryStore) market);
+//                    }
+//                }
+//                orderSthHandler(groceryStores,orders,marketCode,user);
+//                break;
+//            default:
+//                return;
+//        }
+        orderSthHandler(markets,orders,marketCode,user);
     }
     public static void orderSthHandler(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode,User user) {
         if (markets == null) {

@@ -11,7 +11,7 @@ public class Main {
 
         Identify identify = new Identify(manager);
         createRestaurants(manager, identify);
-        createSuperMarket(manager);
+        createSuperMarket(manager,identify);
         createGroceryStore(manager);
         createUsers(manager,identify);
 
@@ -70,10 +70,11 @@ public class Main {
         identify.getUsers().add(cus2);
     }
 
-    public static void createSuperMarket(Manager manager){
-        SuperMarket sup1 = new SuperMarket("sup1","sup1",9,21,2);
+    public static void createSuperMarket(Manager manager,Identify identify){
+        SuperMarket sup1 = new SuperMarket("sup1","sup1",0,24,2,2);
         MarketBoss supBoss1 = new MarketBoss(1,"supBoss1","supBoss1");
         sup1.setMarketBoss(supBoss1);
+        identify.getUsers().add(supBoss1);
         manager.getMarkets().add(sup1);
     }
 

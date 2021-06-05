@@ -1,13 +1,20 @@
 package ir.ac.kntu;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SuperMarket extends Market{
-    HashMap<Product,Integer> productMultiplicityHashMap;
+    private HashMap<Product,Integer> productMultiplicityHashMap;
+    private ArrayList<OrderPeriod> orderPeriods;
+    private int maxOrderPerEachPeriod;
 
-    SuperMarket(String name,String address,int openTime,int closeTime,int deliveryMultiplicity){
+    SuperMarket(String name,String address,int openTime,int closeTime,int deliveryMultiplicity,int maxOrderPerEachPeriod){
         super(name, address, openTime, closeTime, deliveryMultiplicity);
+        this.maxOrderPerEachPeriod = maxOrderPerEachPeriod;
+        this.productMultiplicityHashMap = new HashMap<Product,Integer>();
+        this.orderPeriods = new ArrayList<>();
+        this.orderPeriods = makePeriod();
     }
 
 
@@ -22,6 +29,7 @@ public class SuperMarket extends Market{
         products.add(new Food(tempName,tempPrice,0));
         getProducts().add(new Food(tempName,tempPrice,0));
         productMultiplicityHashMap.put(new Food(tempName,tempPrice,0),tempProductMultiplicity);
+        System.out.println("Okeye");
     }
 
     @Override
@@ -32,7 +40,17 @@ public class SuperMarket extends Market{
         }
         showNumberedProducts();
         int choice = ScannerWrapper.getInstance().nextInt();
+        orderProductHandler(orders,user,choice);
+    }
 
+    public boolean isThereAvailableProduct(){
+        for (int i=0;i<getProducts().size();i++){
+            if (productMultiplicityHashMap.get(getProducts().get(i)) != 0 ){
+                System.out.println(getProducts().toString());
+                return true;
+            }
+        }
+        return false;
     }
 
     public void showNumberedProducts(){
@@ -44,12 +62,44 @@ public class SuperMarket extends Market{
         }
     }
 
-    public boolean isThereAvailableProduct(){
-        for (int i=0;i<getProducts().size();i++){
-            if (productMultiplicityHashMap.get(getProducts().get(i)) != 0){
-                return true;
+    public void orderProductHandler(ArrayList<Order> orders,User user,int productCode){
+        System.out.println("Select the sending period : ");
+        updateSendinCosts();
+        showOrderPeriods();
+        int periodChoice = ScannerWrapper.getInstance().nextInt();
+        Order order = new Order(getProducts().get(productCode),OrderStatus.PROCESSING);
+        orderPeriods.get(periodChoice).setMultiplicity(orderPeriods.get(periodChoice).getMultiplicity()+1);
+        order.setOrderPeriod(orderPeriods.get(periodChoice));
+        orders.add(order);
+        ((Customer)user).getOrders().add(order);
+        System.out.println();
+        System.out.println("<<<<< Done >>>>>");
+    }
+
+    public void updateSendinCosts(){
+        for (int i=0;i<orderPeriods.size();i++){
+            if ((!orderPeriods.get(i).isIncreasedCost()) &&
+                    (orderPeriods.get(i).getMultiplicity() >= orderPeriods.get(i).getMaxOrder()/2)){
+                orderPeriods.get(i).setSendingCost(orderPeriods.get(i).getSendingCost() * 1.5);
+                orderPeriods.get(i).setIncreasedCost(true);
             }
         }
-        return false;
+    }
+
+    public void showOrderPeriods(){
+        for (int i=0;i<orderPeriods.size();i++){
+            if (orderPeriods.get(i).getMultiplicity() < orderPeriods.get(i).getMaxOrder()){
+                System.out.println(i + ") " + orderPeriods.get(i).toString());
+            }
+        }
+    }
+
+    public ArrayList<OrderPeriod> makePeriod(){
+        ArrayList<OrderPeriod> periods = new ArrayList<>();
+        int mainPeriod = (int)getCloseTime() - (int)getOpenTime();
+        for (int i=(int)getOpenTime(); i<mainPeriod;i++){
+            periods.add(new OrderPeriod(i,i+1,0,maxOrderPerEachPeriod));
+        }
+        return periods;
     }
 }

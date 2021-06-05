@@ -51,7 +51,7 @@ public class Restaurant extends Market{
     }
 
     @Override
-    public void orderProduct(ArrayList<Order> orders){
+    public void orderProduct(ArrayList<Order> orders,User user){
         System.out.println("Which food ? ");
         showFoodMenu();
         int orderChoice = ScannerWrapper.getInstance().nextInt();

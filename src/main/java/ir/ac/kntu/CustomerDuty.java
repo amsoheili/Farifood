@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CustomerDuty {
 
-    public static void createCustomer(ArrayList<Customer> customers){
+    public static void createCustomer(ArrayList<User> users){
         System.out.println("Enter the customer's ID: ");
         int tempId = ScannerWrapper.getInstance().nextInt();
         System.out.println("Enter the username: ");
@@ -15,22 +15,22 @@ public class CustomerDuty {
         String tempAddress = ScannerWrapper.getInstance().nextLine();
         System.out.println("Enter the customer's phone number: ");
         long tempPhoneNumber = ScannerWrapper.getInstance().nextInt();
-        customers.add(new Customer(tempId,tempUserName,tempPassWord,tempPhoneNumber,tempAddress));
+        users.add(new Customer(tempId,tempUserName,tempPassWord,tempPhoneNumber,tempAddress));
         System.out.println("Done");
     }
 
-    public static void editCustomer(ArrayList<Customer> customers){
-        if(customers.size() == 0){
+    public static void editCustomer(ArrayList<User> users){
+        if(findCustomers(users).size() == 0){
             System.out.println("There are no customers yet !!");
             return;
         }
         System.out.println("Select the customer that you want to edit: ");
-        showCustomers(customers);
+        showCustomers(users);
         int choice = ScannerWrapper.getInstance().nextInt();
-        editCustomerMenuHandler(choice,customers);
+        editCustomerMenuHandler(choice,users);
     }
 
-    public static void editCustomerMenuHandler(int customerCode,ArrayList<Customer> customers){
+    public static void editCustomerMenuHandler(int customerCode,ArrayList<User> users){
         System.out.println("Which part do you want to change ?" +
                 "\n1) Id" +
                 "\n2) Username " +
@@ -43,40 +43,52 @@ public class CustomerDuty {
             case 1:
                 System.out.println("Enter the new id: ");
                 int newId = ScannerWrapper.getInstance().nextInt();
-                customers.get(customerCode).setId(newId);
+                users.get(customerCode).setId(newId);
                 break;
             case 2:
                 System.out.println("Enter the new username: ");
                 String newUserName = ScannerWrapper.getInstance().nextLine();
-                customers.get(customerCode).setUserName(newUserName);
+                users.get(customerCode).setUserName(newUserName);
                 break;
             case 3:
                 System.out.println("Enter the new password: ");
                 String newPassWord = ScannerWrapper.getInstance().nextLine();
-                customers.get(customerCode).setPassWord(newPassWord);
+                users.get(customerCode).setPassWord(newPassWord);
                 break;
             case 4:
                 System.out.println("Enter the new phone number : ");
                 int newPhoneNumber = ScannerWrapper.getInstance().nextInt();
-                customers.get(customerCode).setPhoneNumber(newPhoneNumber);
+                ((Customer)users.get(customerCode)).setPhoneNumber(newPhoneNumber);
                 break;
             case 5:
                 System.out.println("Enter the new address: ");
                 String newAddress = ScannerWrapper.getInstance().nextLine();
-                customers.get(customerCode).setAddress(newAddress);
+                ((Customer)users.get(customerCode)).setAddress(newAddress);
                 break;
             case 6:
                 return;
             default:
-                editCustomerMenuHandler(customerCode,customers);
+                editCustomerMenuHandler(customerCode,users);
                 break;
         }
-        editCustomerMenuHandler(customerCode,customers);
+        editCustomerMenuHandler(customerCode,users);
     }
 
-    public static void showCustomers(ArrayList<Customer> customers){
-        for(int i=0;i<customers.size();i++){
-            System.out.println(i +") "+ customers.get(i).getId());
+    public static void showCustomers(ArrayList<User> users){
+        for(int i=0;i<users.size();i++){
+            if (users.get(i) instanceof Customer){
+                System.out.println(i +") "+ users.get(i).getUserName());
+            }
         }
+    }
+
+    public static ArrayList<Customer> findCustomers(ArrayList<User> users){
+        ArrayList<Customer> customers = new ArrayList<>();
+        for (int i=0;i< users.size();i++){
+            if (users.get(i) instanceof Customer){
+                customers.add((Customer) users.get(i));
+            }
+        }
+        return customers;
     }
 }

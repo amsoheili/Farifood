@@ -29,16 +29,16 @@ public class MarketBossMenu {
                 market.editMarket();
                 break;
             case 3:
-                showComments();
+                market.showComments();
                 break;
             case 4:
-                showMarketDeliveries();
+                market.showDeliveries();
                 break;
             case 5:
-                showOrders();
+                market.showOrders();
                 break;
             case 6:
-                addProducts();
+                market.addProduct(manager.getProducts());
                 break;
             default:
                 System.out.println("Incorrect input !! please try again ");
@@ -47,14 +47,5 @@ public class MarketBossMenu {
         }
     }
 
-    public void showComments(){
-        if (market.getComments().size() == 0){
-            System.out.println("There are no comments yet !! ");
-            return;
-        }
-        for (int i=0;i<market.getComments().size();i++){
-            System.out.println(i + ") " + market.getComments().get(i).toString());
-        }
-    }
 
 }

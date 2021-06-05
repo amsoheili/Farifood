@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class GroceryStoreDuty {
 
-    public static void declareGroceryStore(ArrayList<Market> markets) {
-        System.out.println("Declaring restaurant:");
+    public static void declareGroceryStore(Manager manager) {
+        System.out.println("Declaring grocery store:");
         System.out.println("Name: ");
         String tempName = ScannerWrapper.getInstance().nextLine();
         System.out.println("Address: ");
@@ -16,14 +16,27 @@ public class GroceryStoreDuty {
         int tempCloseTime = ScannerWrapper.getInstance().nextInt();
         System.out.println("Delivery multiplicity: ");
         int tempDeliveryMultiplicity = ScannerWrapper.getInstance().nextInt();
-        if (markets.contains(new GroceryStore(tempName, tempAddress, tempOpenTime,
+        if (manager.getMarkets().contains(new GroceryStore(tempName, tempAddress, tempOpenTime,
                 tempCloseTime, tempDeliveryMultiplicity))) {
             System.out.println("This restaurant has been declared before !!");
             return;
         } else {
-            markets.add(new GroceryStore(tempName, tempAddress, tempOpenTime, tempCloseTime, tempDeliveryMultiplicity));
+            GroceryStore tempGroceryStore = new GroceryStore(tempName, tempAddress, tempOpenTime, tempCloseTime, tempDeliveryMultiplicity);
+            tempGroceryStore.setMarketBoss(declareGroceryStoreBoss(manager));
+            manager.getMarkets().add(tempGroceryStore);
             System.out.println("<<<<<< Done >>>>>>>");
         }
+    }
+
+    public static MarketBoss declareGroceryStoreBoss(Manager manager){
+        System.out.println("Enter the name : ");
+        String tempUserName = ScannerWrapper.getInstance().nextLine();
+        System.out.println("Enter the username : ");
+        String tempPassWord = ScannerWrapper.getInstance().nextLine();
+        System.out.println("Enter the id : ");
+        int tempId = ScannerWrapper.getInstance().nextInt();
+        manager.getUsers().add(new MarketBoss(tempId,tempUserName,tempPassWord));
+        return new MarketBoss(tempId,tempUserName,tempPassWord);
     }
 
     public static void editGroceryStore(ArrayList<Market> markets){
@@ -134,17 +147,8 @@ public class GroceryStoreDuty {
         System.out.println("Select the grocery store to add a food to it's products");
         OrderDuty.showMarkets(markets,false,3);
         int choice = ScannerWrapper.getInstance().nextInt();
-        markets.get(choice).getProducts().add(declareFruit(products));
+        markets.get(choice).addProduct(products);
         System.out.println("<<<< Done >>>>");
-    }
-
-    public static Fruit declareFruit(ArrayList<Product> products){
-        System.out.println("Name: ");
-        String tempName = ScannerWrapper.getInstance().nextLine();
-        System.out.println("Price: ");
-        double tempPrice = ScannerWrapper.getInstance().nextDouble();
-        products.add(new Fruit(tempName,tempPrice));
-        return new Fruit(tempName,tempPrice);
     }
 
     public static void showBestFruit(ArrayList<Market> markets){

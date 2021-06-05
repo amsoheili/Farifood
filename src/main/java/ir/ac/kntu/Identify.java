@@ -10,6 +10,7 @@ public class Identify {
     Identify(Manager manager){
         this.manager = manager;
         this.users = new ArrayList<>();
+        manager.setUsers(users);
     }
 
     public boolean start(){
@@ -153,8 +154,10 @@ public class Identify {
         String tempUserName = ScannerWrapper.getInstance().nextLine();
         System.out.println("Enter your password: ");
         String tempPassWord = ScannerWrapper.getInstance().nextLine();
-        if(verifyMarketBoss(tempUserName,tempPassWord)){
-            //MarketBossMenu.start();
+        MarketBoss tempMarketBoss = recognizeMarketBoss(tempUserName,tempPassWord);
+        if(tempMarketBoss != null){
+            MarketBossMenu marketBossMenu = new MarketBossMenu(findBossMarket(tempMarketBoss));
+            marketBossMenu.mainMenu(manager);
         }else{
             System.out.println("There are no restaurant boss with the given information !!");
         }
@@ -162,13 +165,22 @@ public class Identify {
 
     }
 
-    public boolean verifyMarketBoss(String tempUserName,String tempPassWord){
+    public MarketBoss recognizeMarketBoss(String tempUserName,String tempPassWord){
         for (User user:users){
             if (user instanceof MarketBoss && user.getUserName().equals(tempUserName)
                     && user.getPassWord().equals(tempPassWord)){
-                return true;
+                return (MarketBoss) user;
             }
         }
-        return false;
+        return null;
+    }
+
+    public Market findBossMarket(MarketBoss marketBoss){
+        for (int i=0;i<manager.getMarkets().size();i++){
+            if (manager.getMarkets().get(i).getMarketBoss().equals(marketBoss)){
+                return manager.getMarkets().get(i);
+            }
+        }
+        return null;
     }
 }

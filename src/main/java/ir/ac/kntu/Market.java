@@ -254,6 +254,10 @@ public class Market {
         }
     }
 
+    public void addProduct(ArrayList<Product> products){
+
+    }
+
     @Override
     public String toString(){
         return "name: " + name + "\n" +

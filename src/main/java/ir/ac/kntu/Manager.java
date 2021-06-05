@@ -11,14 +11,13 @@ public class Manager {
     private ArrayList<Product> products;
     private ArrayList<Delivery> deliveries;
     private ArrayList<Comment> comments;
-    private HashMap<Integer,Customer> idCustomer;
-
+    private ArrayList<User> users;
 
     public Manager() {
+        this.users = new ArrayList<>();
         this.markets = new ArrayList<>();
         this.orders = new ArrayList<>();
         this.customers = new ArrayList<>();
-        this.idCustomer = new HashMap<>();
         this.products = new ArrayList<>();
         this.deliveries = new ArrayList<>();
         this.comments = new ArrayList<>();
@@ -26,6 +25,14 @@ public class Manager {
 
     public void addOrder(Order order){
         this.orders.add(order);
+    }
+
+    public ArrayList<User> getUsers(){
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users){
+        this.users = users;
     }
 
     public ArrayList<Market> getMarkets(){
@@ -98,15 +105,15 @@ public class Manager {
     }
 
     public void declareRestaurant() {
-        RestaurantDuty.declareRestaurant(markets);
+        RestaurantDuty.declareRestaurant(this);
     }
 
     public void declareSuperMarket(){
-        SuperMarketDuty.declareSuperMarket(markets);
+        SuperMarketDuty.declareSuperMarket(this);
     }
 
     public void declareGroceryStore(){
-        GroceryStoreDuty.declareGroceryStore(markets);
+        GroceryStoreDuty.declareGroceryStore(this);
     }
 
     public void editRestaurant(){
@@ -166,15 +173,15 @@ public class Manager {
     }
 
     public void createCustomer(){
-        CustomerDuty.createCustomer(customers);
+        CustomerDuty.createCustomer(users);
     }
 
     public void editCustomer(){
-        CustomerDuty.editCustomer(customers);
+        CustomerDuty.editCustomer(users);
     }
 
     public void showCustomers(){
-        CustomerDuty.showCustomers(customers);
+        CustomerDuty.showCustomers(users);
     }
 
     public void setOrderFoodRestaurant(){

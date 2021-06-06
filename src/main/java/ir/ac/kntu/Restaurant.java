@@ -4,15 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Restaurant extends Market{
-    private String name;
-    private String address;
-    private ArrayList<Order> orders;
-    private int score=5;
-    private double openTime;
-    private double closeTime;
-    private ArrayList<Comment> comments;
-    private int deliveryMultiplicity;
-    private ArrayList<Delivery> deliveries;
     private RestaurantType restaurantType;
 
     Restaurant() { }
@@ -24,7 +15,7 @@ public class Restaurant extends Market{
 
     Restaurant(String name,String address,int openTime,int closeTime,int deliveryMultiplicity,RestaurantType restaurantType,int score){
         this(name,address,openTime,closeTime,deliveryMultiplicity,restaurantType);
-        this.score = score;
+        setScore(score);
 
     }
 
@@ -55,16 +46,17 @@ public class Restaurant extends Market{
         System.out.println("Which food ? ");
         showFoodMenu();
         int orderChoice = ScannerWrapper.getInstance().nextInt();
-        if (deliveries.size() == 0){
+        if (getDeliveries().size() == 0){
             System.out.println("There are no deliveries yet !!");
         }else{
             System.out.println("Select the delivery : ");
             showDeliveries();
             int deliveryChoice = ScannerWrapper.getInstance().nextInt();
-            deliveries.get(deliveryChoice).getOrders().add(new Order(getProducts().get(orderChoice), OrderStatus.PROCESSING));
+            getDeliveries().get(deliveryChoice).getOrders().add(new Order(getProducts().get(orderChoice), OrderStatus.PROCESSING));
         }
-        this.orders.add(new Order(getProducts().get(orderChoice), OrderStatus.PROCESSING));
+        getOrders().add(new Order(getProducts().get(orderChoice), OrderStatus.PROCESSING));
         orders.add(new Order(getProducts().get(orderChoice), OrderStatus.PROCESSING));
+        ((Customer)user).getOrders().add(new Order(getProducts().get(orderChoice), OrderStatus.PROCESSING));
         System.out.println("Done");
     }
 

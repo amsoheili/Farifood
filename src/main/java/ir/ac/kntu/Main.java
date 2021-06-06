@@ -12,7 +12,7 @@ public class Main {
         Identify identify = new Identify(manager);
         createRestaurants(manager, identify);
         createSuperMarket(manager,identify);
-        createGroceryStore(manager);
+        createGroceryStore(manager,identify);
         createUsers(manager,identify);
 
         while (true){
@@ -39,18 +39,18 @@ public class Main {
         res1.setMarketBoss(resBoss1);
         res2.setMarketBoss(resBoss2);
         res3.setMarketBoss(resBoss3);
-//        res1.getProducts().add(food1);
-//        res2.getProducts().add(food2);
-//        res3.getProducts().add(food3);
+        res1.getProducts().add(food1);
+        res2.getProducts().add(food2);
+        res3.getProducts().add(food3);
         res1.addOrder(order1);
         res1.addDelivery(del1);
         res2.addDelivery(del1);
         identify.getUsers().add(resBoss1);
         identify.getUsers().add(resBoss2);
         identify.getUsers().add(resBoss3);
-//        manager.getProducts().add(food1);
-//        manager.getProducts().add(food2);
-//        manager.getProducts().add(food3);
+        manager.getProducts().add(food1);
+        manager.getProducts().add(food2);
+        manager.getProducts().add(food3);
         manager.getMarkets().add(res1);
         manager.getMarkets().add(res2);
         manager.getMarkets().add(res3);
@@ -78,10 +78,11 @@ public class Main {
         manager.getMarkets().add(sup1);
     }
 
-    public static void createGroceryStore(Manager manager){
-        GroceryStore gro1 = new GroceryStore("gro1","gro1",9,21,1);
+    public static void createGroceryStore(Manager manager,Identify identify){
+        GroceryStore gro1 = new GroceryStore("gro1","gro1",0,24,1,5);
         MarketBoss groBoss1 = new MarketBoss(1,"groBoss1","groBoss1");
         gro1.setMarketBoss(groBoss1);
+        identify.getUsers().add(groBoss1);
         manager.getMarkets().add(gro1);
     }
 }

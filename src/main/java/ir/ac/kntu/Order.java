@@ -12,6 +12,7 @@ public class Order {
     Order(Product product,OrderStatus status){
         this.product = product;
         this.status = status;
+        this.orderPeriod = new OrderPeriod();
     }
 
     public void setOrderPeriod(OrderPeriod orderPeriod) {
@@ -40,8 +41,8 @@ public class Order {
 
     @Override
     public String toString(){
-        return "\nfood name: " + product.getName() +
-                "\nStatus: " + status +
+        return "\nProduct name: " + product.getName() +
+                "\nStatus: " + status + "\n" +
                 (orderPeriod!=null ? orderPeriod.toString() : "No order period");
     }
 

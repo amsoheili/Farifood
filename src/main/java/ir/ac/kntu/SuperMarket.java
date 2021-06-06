@@ -1,6 +1,5 @@
 package ir.ac.kntu;
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,7 +63,7 @@ public class SuperMarket extends Market{
 
     public void orderProductHandler(ArrayList<Order> orders,User user,int productCode){
         System.out.println("Select the sending period : ");
-        updateSendinCosts();
+        updateSendingCosts();
         showOrderPeriods();
         int periodChoice = ScannerWrapper.getInstance().nextInt();
         Order order = new Order(getProducts().get(productCode),OrderStatus.PROCESSING);
@@ -72,11 +71,13 @@ public class SuperMarket extends Market{
         order.setOrderPeriod(orderPeriods.get(periodChoice));
         orders.add(order);
         ((Customer)user).getOrders().add(order);
-        System.out.println();
+        productMultiplicityHashMap.replace(getProducts().get(productCode),
+                productMultiplicityHashMap.get(getProducts().get(productCode)) - 1 );
+        System.out.println("Your Order is : " + order.toString());
         System.out.println("<<<<< Done >>>>>");
     }
 
-    public void updateSendinCosts(){
+    public void updateSendingCosts(){
         for (int i=0;i<orderPeriods.size();i++){
             if ((!orderPeriods.get(i).isIncreasedCost()) &&
                     (orderPeriods.get(i).getMultiplicity() >= orderPeriods.get(i).getMaxOrder()/2)){

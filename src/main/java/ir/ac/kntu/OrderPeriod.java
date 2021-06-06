@@ -8,6 +8,10 @@ public class OrderPeriod {
     private int maxOrder;
     private boolean increasedCost;
 
+    public OrderPeriod(){
+
+    }
+
     public OrderPeriod(int start,int end,int multiplicity,int maxOrder){
         this.start = start;
         this.end = end;
@@ -50,8 +54,8 @@ public class OrderPeriod {
 
     @Override
     public String toString(){
-        return "Start : " + start + ",End : " +
-                end + ",Multiplicity : " + multiplicity +
-                ",Sending Cost : " + sendingCost ;
+        return "Sending period : \nStart : " + start + ",End : " +
+                end + " ,Multiplicity : " + multiplicity +
+                " ,Sending Cost : " + sendingCost ;
     }
 }

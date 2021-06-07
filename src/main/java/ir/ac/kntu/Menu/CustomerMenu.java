@@ -39,7 +39,7 @@ public class CustomerMenu {
                 OrderDuty.addCommentUser(manager.getOrders(), manager.getMarkets(),manager.getComments(),customer);
                 break;
             case 5:
-
+                manager.addScore(customer);
                 break;
             case 9:
                 return;

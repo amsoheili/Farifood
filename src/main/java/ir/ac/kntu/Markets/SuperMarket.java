@@ -52,7 +52,6 @@ public class SuperMarket extends Market {
     public boolean isThereAvailableProduct(){
         for (int i=0;i<getProducts().size();i++){
             if (productMultiplicityHashMap.get(getProducts().get(i)) != 0 ){
-                //System.out.println(getProducts().toString());
                 return true;
             }
         }
@@ -81,6 +80,14 @@ public class SuperMarket extends Market {
         productMultiplicityHashMap.replace(getProducts().get(productCode),
                 productMultiplicityHashMap.get(getProducts().get(productCode)) - 1 );
         getOrders().add(order);
+        if (getDeliveries().size() == 0){
+            System.out.println("There are no deliveries yet !!");
+        }else{
+            System.out.println("Select the delivery : ");
+            showDeliveries();
+            int deliveryChoice = ScannerWrapper.getInstance().nextInt();
+            getDeliveries().get(deliveryChoice).getOrders().add(order);
+        }
         System.out.println("Your Order is : " + order.toString());
         System.out.println("<<<<< Done >>>>>");
     }

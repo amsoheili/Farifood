@@ -107,7 +107,7 @@ public class AdminMenu {
                 manager.addComment(admin);
                 break;
             case 5:
-                manager.addScore();
+                manager.addScore(admin);
                 break;
             case 6:
                 manager.showOrders();

@@ -17,44 +17,7 @@ public class OrderDuty {
 
     OrderDuty() {
     }
-
-    public static void orderSth(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode, User user){
-//        switch (marketCode){
-//            case 1:
-////                ArrayList<Market> restaurants = new ArrayList<>();
-////                for (Market market:markets){
-////                    if (market instanceof Restaurant){
-////                        restaurants.add((Restaurant) market);
-////                    }
-////                }
-//                orderSthHandler(markets,orders,marketCode,user);
-//                break;
-//            case 2:
-////                ArrayList<Market> superMarkets = new ArrayList<>();
-////                for (Market market:markets){
-////                    if (market instanceof SuperMarket){
-////                        superMarkets.add((SuperMarket) market);
-////                    }
-////                }
-//                orderSthHandler(markets,orders,marketCode,user);
-//                break;
-//            case 3:
-//                //orderFruit
-//                ArrayList<Market> groceryStores = new ArrayList<>();
-//                for (Market market:markets){
-//                    if (market instanceof GroceryStore){
-//                        groceryStores.add((GroceryStore) market);
-//                    }
-//                }
-//                orderSthHandler(groceryStores,orders,marketCode,user);
-//                break;
-//            default:
-//                return;
-//        }
-        orderSthHandler(markets,orders,marketCode,user);
-    }
-
-    public static void orderSthHandler(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode,User user) {
+    public static void orderSth(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode,User user) {
         if (markets == null) {
             System.out.println("There are no active markets.");
             return;
@@ -352,7 +315,7 @@ public class OrderDuty {
         }
     }
 
-    public static void addScore(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments){
+    public static void addScore(ArrayList<Order> orders,ArrayList<Market> markets,User user){
         if(isThereDeliveredOrder(orders)){
             System.out.println("Which one ? ");
             showFilteredOrders(OrderStatus.DELIVERED,orders);
@@ -361,6 +324,24 @@ public class OrderDuty {
             orders.get(choice).getProduct().addScore();
         }else {
             System.out.println("There are not any delivered order :)");
+        }
+
+        if (user instanceof Customer){
+            if (isThereDeliveredOrder(((Customer)user).getOrders())){
+                System.out.println("Which one ?");
+                showFilteredOrders(OrderStatus.DELIVERED,((Customer)user).getOrders());
+                int choice = ScannerWrapper.getInstance().nextInt();
+                findMarket(((Customer)user).getOrders().get(choice),markets).addScore();
+            }
+        }else{
+            if(isThereDeliveredOrder(orders)){
+                System.out.println("Which one ?");
+                showFilteredOrders(OrderStatus.DELIVERED,orders);
+                int choice = ScannerWrapper.getInstance().nextInt();
+                findMarket(orders.get(choice), markets).addScore();
+            }else{
+                System.out.println("There are not any delivered order :)");
+            }
         }
     }
 

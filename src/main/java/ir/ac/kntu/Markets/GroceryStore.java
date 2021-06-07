@@ -81,6 +81,14 @@ public class GroceryStore extends Market {
         productKilogramHashMap.replace(getProducts().get(productCode),
                 productKilogramHashMap.get(getProducts().get(productCode)) - fruitAmount );
         getOrders().add(order);
+        if (getDeliveries().size() == 0){
+            System.out.println("There are no deliveries yet !!");
+        }else{
+            System.out.println("Select the delivery : ");
+            showDeliveries();
+            int deliveryChoice = ScannerWrapper.getInstance().nextInt();
+            getDeliveries().get(deliveryChoice).getOrders().add(order);
+        }
         System.out.println("Your Order is : " + order.toString());
         System.out.println("<<<<< Done >>>>>");
     }

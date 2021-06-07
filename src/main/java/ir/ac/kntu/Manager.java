@@ -106,8 +106,8 @@ public class Manager {
         OrderDuty.addCommentUser(orders,markets,comments,user);
     }
 
-    public void addScore(){
-        OrderDuty.addScore(orders,markets,comments);
+    public void addScore(User user){
+        OrderDuty.addScore(orders,markets,user);
     }
 
     public void setOrderStatus(){

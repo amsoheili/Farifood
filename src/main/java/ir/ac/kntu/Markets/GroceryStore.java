@@ -80,13 +80,13 @@ public class GroceryStore extends Market {
         ((Customer)user).getOrders().add(order);
         productKilogramHashMap.replace(getProducts().get(productCode),
                 productKilogramHashMap.get(getProducts().get(productCode)) - fruitAmount );
+        getOrders().add(order);
         System.out.println("Your Order is : " + order.toString());
         System.out.println("<<<<< Done >>>>>");
     }
 
     public void showOrderPeriods(){
         for (int i=0;i<orderPeriods.size();i++){
-            System.out.println("A");
             if (orderPeriods.get(i).getMultiplicity() < orderPeriods.get(i).getMaxOrder()){
                 System.out.println(i + ") " + orderPeriods.get(i).toString());
             }
@@ -100,5 +100,9 @@ public class GroceryStore extends Market {
             periods.add(new OrderPeriod(i,i+2,0,maxOrderAmountPerEachPeriod));
         }
         return periods;
+    }
+
+    public HashMap<Product, Integer> getProductKilogramHashMap() {
+        return productKilogramHashMap;
     }
 }

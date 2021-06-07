@@ -5,6 +5,7 @@ import ir.ac.kntu.Logic.OrderStatus;
 import ir.ac.kntu.Logic.ScannerWrapper;
 import ir.ac.kntu.Product.Product;
 import ir.ac.kntu.Users.Comment;
+import ir.ac.kntu.Users.Customer;
 import ir.ac.kntu.Users.MarketBoss;
 import ir.ac.kntu.Users.User;
 
@@ -74,11 +75,12 @@ public class Market {
         this.orders.add(order);
     }
 
-    public void addComment(String foodName,ArrayList<Comment> comments){
+    public void addComment(String foodName,ArrayList<Comment> comments,User user){
         System.out.println("Write your main text: ");
         String commentText = ScannerWrapper.getInstance().nextLine();
         this.comments.add(new Comment(foodName,commentText));
         comments.add(new Comment(foodName,commentText));
+        ((Customer)user).getComments().add(new Comment(foodName,commentText));
         System.out.println("Done !!");
     }
 

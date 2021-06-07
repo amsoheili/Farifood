@@ -6,6 +6,7 @@ import ir.ac.kntu.Logic.OrderStatus;
 import ir.ac.kntu.Logic.ScannerWrapper;
 import ir.ac.kntu.Markets.*;
 import ir.ac.kntu.Users.Comment;
+import ir.ac.kntu.Users.Customer;
 import ir.ac.kntu.Users.User;
 
 import java.time.LocalTime;
@@ -52,6 +53,7 @@ public class OrderDuty {
 //        }
         orderSthHandler(markets,orders,marketCode,user);
     }
+
     public static void orderSthHandler(ArrayList<Market> markets, ArrayList<Order> orders, int marketCode,User user) {
         if (markets == null) {
             System.out.println("There are no active markets.");
@@ -89,6 +91,8 @@ public class OrderDuty {
             case 3:
                 showGroceryStore(markets,timeConsider);
                 break;
+            default:
+                return;
         }
     }
 
@@ -233,7 +237,7 @@ public class OrderDuty {
 //        System.out.println("Our suggestion is : " + x + ")" + markets.get(x).getName());
 //    }
 
-    public static void filterOrders(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments) {
+    public static void filterOrders(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments,User user) {
         if (orders == null) {
             System.out.println("There are no order");
             return;
@@ -252,12 +256,12 @@ public class OrderDuty {
                 showFilteredOrders(OrderStatus.SENDING,orders);
                 break;
             case 3:
-                deliveredOrdersMenu(orders, markets,comments);
+                deliveredOrdersMenu(orders, markets,comments,user);
                 break;
             case 4:
                 return;
             default:
-                filterOrders(orders, markets,comments);
+                filterOrders(orders, markets,comments,user);
         }
     }
 
@@ -269,13 +273,13 @@ public class OrderDuty {
         }
     }
 
-    private static void deliveredOrdersMenu(ArrayList<Order> orders, ArrayList<Market> markets, ArrayList<Comment> comments) {
+    private static void deliveredOrdersMenu(ArrayList<Order> orders, ArrayList<Market> markets, ArrayList<Comment> comments,User user) {
         if (isThereDeliveredOrder(orders)) {
             showFilteredOrders(OrderStatus.DELIVERED,orders);
             System.out.println("Do you want to add comment ?( 1-Yes   2-No)");
             int choice = ScannerWrapper.getInstance().nextInt();
             if (choice == 1) {
-                addComment(orders, markets,comments);
+                addCommentUser(orders, markets,comments,user);
             } else {
                 System.out.println("Bye!");
             }
@@ -294,14 +298,24 @@ public class OrderDuty {
         return false;
     }
 
-    public static void addComment(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments){
-        if(isThereDeliveredOrder(orders)){
+    public static void addCommentUser(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments,User user){
+        if (user instanceof Customer){
+            if (isThereDeliveredOrder(((Customer)user).getOrders())){
+                System.out.println("Which one ?");
+                showFilteredOrders(OrderStatus.DELIVERED,((Customer)user).getOrders());
+                int choice = ScannerWrapper.getInstance().nextInt();
+                findMarket(((Customer)user).getOrders().get(choice),markets).addComment(((Customer)user).getOrders().get(choice).getProduct().getName(),
+                        comments,((Customer)user));
+            }    
+        }else{
+            if(isThereDeliveredOrder(orders)){
             System.out.println("Which one ?");
             showFilteredOrders(OrderStatus.DELIVERED,orders);
             int choice = ScannerWrapper.getInstance().nextInt();
-            findMarket(orders.get(choice), markets).addComment(orders.get(choice).getProduct().getName(),comments);
+            findMarket(orders.get(choice), markets).addComment(orders.get(choice).getProduct().getName(),comments,user);
         }else{
             System.out.println("There are not any delivered order :)");
+        }
         }
     }
 
@@ -322,13 +336,19 @@ public class OrderDuty {
             return;
         }
         System.out.println("Choose a market to change it's orders :");
-        showMarkets(markets,false,1);
+        showAllMarkets(markets);
         int choice = ScannerWrapper.getInstance().nextInt();
         if(markets.get(choice).getOrders().size() == 0){
             System.out.println("orders is empty.");
             return;
         }else{
             markets.get(choice).setOrderStatus(manager);
+        }
+    }
+
+    public static void showAllMarkets(ArrayList<Market> markets){
+        for (int i=0;i<markets.size();i++){
+            System.out.println(i + ") " + markets.get(i).getName());
         }
     }
 

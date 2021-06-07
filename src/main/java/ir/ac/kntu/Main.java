@@ -6,6 +6,7 @@ import ir.ac.kntu.Logic.SalaryType;
 import ir.ac.kntu.Logic.TransportationVehicle;
 import ir.ac.kntu.Markets.*;
 import ir.ac.kntu.Product.Food;
+import ir.ac.kntu.Product.Fruit;
 import ir.ac.kntu.Users.Admin;
 import ir.ac.kntu.Users.Customer;
 import ir.ac.kntu.Users.MarketBoss;
@@ -81,16 +82,24 @@ public class Main {
     public static void createSuperMarket(Manager manager,Identify identify){
         SuperMarket sup1 = new SuperMarket("sup1","sup1",0,24,2,2);
         MarketBoss supBoss1 = new MarketBoss(1,"supBoss1","supBoss1");
+        Food superFood1 = new Food("superFood1",10);
+        sup1.getProducts().add(superFood1);
         sup1.setMarketBoss(supBoss1);
+        sup1.getProductMultiplicityHashMap().put(superFood1,5);
         identify.getUsers().add(supBoss1);
         manager.getMarkets().add(sup1);
+        manager.getProducts().add(superFood1);
     }
 
     public static void createGroceryStore(Manager manager,Identify identify){
         GroceryStore gro1 = new GroceryStore("gro1","gro1",0,24,1,5);
         MarketBoss groBoss1 = new MarketBoss(1,"groBoss1","groBoss1");
+        Fruit apple = new Fruit("Apple",20);
         gro1.setMarketBoss(groBoss1);
+        gro1.getProducts().add(apple);
+        gro1.getProductKilogramHashMap().put(apple,5);
         identify.getUsers().add(groBoss1);
         manager.getMarkets().add(gro1);
+        manager.getProducts().add(apple);
     }
 }

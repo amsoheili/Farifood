@@ -8,7 +8,7 @@ import ir.ac.kntu.Users.Admin;
 import java.util.HashMap;
 
 public class AdminMenu {
-    Admin admin;
+    private Admin admin;
 
     public AdminMenu(Admin admin){
         this.admin = admin;
@@ -33,25 +33,31 @@ public class AdminMenu {
     }
 
     public void setShowMainMenu(){
-        System.out.println("Enter your wished set to show these options in main menu : " +
-                "(for example 23145) ");
+        System.out.println("<<<<< SET ORDER OF MENU OPTIONS >>>>>\nEnter your wished set to show these options in main menu : " +
+                "(for example 2314) ");
         System.out.println(
                 "1) Orders Menu" +
                         "\n2) Settings" +
                         "\n3) Delivery Menu" +
-                        "\n4) Market Menu" );
+                        "\n4) Market Menu" +
+                        "\n<<<<< SET ORDER OF MENU OPTIONS >>>>>" );
         int set = ScannerWrapper.getInstance().nextInt();
-        setMenu.put(1,MenuOptions.ORDERS_MENU);
-        setMenu.put(2,MenuOptions.SETTINGS);
-        setMenu.put(3,MenuOptions.DELIVERY_MENU);
-        setMenu.put(4,MenuOptions.MARKET_MENU);
-        setMenu.get(set%10).setRate(4);
-        set /= 10;
-        setMenu.get(set%10).setRate(3);
-        set /= 10;
-        setMenu.get(set%10).setRate(2);
-        set /= 10;
-        setMenu.get(set%10).setRate(1);
+        if (set%1000 == 0){
+            System.out.println("Incorrect input !! please try again ");
+            setShowMainMenu();
+        }else{
+            setMenu.put(1,MenuOptions.ORDERS_MENU);
+            setMenu.put(2,MenuOptions.SETTINGS);
+            setMenu.put(3,MenuOptions.DELIVERY_MENU);
+            setMenu.put(4,MenuOptions.MARKET_MENU);
+            setMenu.get(set%10).setRate(4);
+            set /= 10;
+            setMenu.get(set%10).setRate(3);
+            set /= 10;
+            setMenu.get(set%10).setRate(2);
+            set /= 10;
+            setMenu.get(set%10).setRate(1);
+        }
     }
 
     public boolean mainMenuHandler(Manager manager){
@@ -92,13 +98,13 @@ public class AdminMenu {
                 orderProductMarket(manager);
                 break;
             case 2:
-                manager.filterOrders();
+                manager.filterOrders(admin);
                 break;
             case 3:
                 manager.setOrderStatus();
                 break;
             case 4:
-                manager.addComment();
+                manager.addComment(admin);
                 break;
             case 5:
                 manager.addScore();

@@ -98,12 +98,12 @@ public class Manager {
         }
     }
 
-    public void filterOrders(){
-        OrderDuty.filterOrders(orders,markets,comments);
+    public void filterOrders(User user){
+        OrderDuty.filterOrders(orders,markets,comments,user);
     }
 
-    public void addComment(){
-        OrderDuty.addComment(orders,markets,comments);
+    public void addComment(User user){
+        OrderDuty.addCommentUser(orders,markets,comments,user);
     }
 
     public void addScore(){
@@ -142,9 +142,13 @@ public class Manager {
         RestaurantDuty.showRestaurantScore(markets);
     }
 
-    public void showSuperMarketScore(){SuperMarketDuty.showSuperMarketScore(markets);}
+    public void showSuperMarketScore(){
+        SuperMarketDuty.showSuperMarketScore(markets);
+    }
 
-    public void showGroceryStoreScore(){GroceryStoreDuty.showGroceryStoreScore(markets);}
+    public void showGroceryStoreScore(){
+        GroceryStoreDuty.showGroceryStoreScore(markets);
+    }
 
     public void showRestaurantComments(){
         RestaurantDuty.showRestaurantComments(markets);

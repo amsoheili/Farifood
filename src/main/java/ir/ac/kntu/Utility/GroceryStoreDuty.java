@@ -31,8 +31,8 @@ public class GroceryStoreDuty {
             System.out.println("This restaurant has been declared before !!");
             return;
         } else {
-            GroceryStore tempGroceryStore = new GroceryStore
-                    (tempName, tempAddress, tempOpenTime, tempCloseTime, tempDeliveryMultiplicity,maxOrderAmountPerEachPeriod);
+            GroceryStore tempGroceryStore = new GroceryStore(tempName, tempAddress,
+                    tempOpenTime, tempCloseTime, tempDeliveryMultiplicity,maxOrderAmountPerEachPeriod);
             tempGroceryStore.setMarketBoss(declareGroceryStoreBoss(manager));
             manager.getMarkets().add(tempGroceryStore);
             System.out.println("<<<<<< Done >>>>>>>");

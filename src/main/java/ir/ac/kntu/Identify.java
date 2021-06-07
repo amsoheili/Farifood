@@ -122,7 +122,7 @@ public class Identify {
                 "\n2) Show all of the admins" +
                 "\n3) Set an admin" +
                 "\n4) Exit");
-                adminStuffHandler(manager,currentAdmin);
+        adminStuffHandler(manager,currentAdmin);
     }
 
     public void adminStuffHandler(Manager manager,Admin currentAdmin){
@@ -145,6 +145,7 @@ public class Identify {
                 adminStuffMenu(currentAdmin);
                 break;
         }
+        adminStuffMenu(currentAdmin);
     }
 
     public boolean verifyAdmin(String tempUserName,String tempPassWord){

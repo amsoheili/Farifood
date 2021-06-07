@@ -5,7 +5,7 @@ import ir.ac.kntu.Markets.Market;
 import ir.ac.kntu.Logic.ScannerWrapper;
 
 public class MarketBossMenu {
-    Market market;
+    private Market market;
 
     public MarketBossMenu(Market market){
         this.market = market;

@@ -54,8 +54,8 @@ public class OrderPeriod {
 
     @Override
     public String toString(){
-        return "Sending period : \nStart : " + start + ",End : " +
+        return "Sending period -> Start : " + start + ",End : " +
                 end + " ,Multiplicity : " + multiplicity +
-                " ,Sending Cost : " + sendingCost ;
+                " ,Sending Cost : " + sendingCost;
     }
 }

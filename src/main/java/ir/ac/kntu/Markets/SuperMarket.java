@@ -52,7 +52,7 @@ public class SuperMarket extends Market {
     public boolean isThereAvailableProduct(){
         for (int i=0;i<getProducts().size();i++){
             if (productMultiplicityHashMap.get(getProducts().get(i)) != 0 ){
-                System.out.println(getProducts().toString());
+                //System.out.println(getProducts().toString());
                 return true;
             }
         }
@@ -80,6 +80,7 @@ public class SuperMarket extends Market {
         ((Customer)user).getOrders().add(order);
         productMultiplicityHashMap.replace(getProducts().get(productCode),
                 productMultiplicityHashMap.get(getProducts().get(productCode)) - 1 );
+        getOrders().add(order);
         System.out.println("Your Order is : " + order.toString());
         System.out.println("<<<<< Done >>>>>");
     }
@@ -109,5 +110,9 @@ public class SuperMarket extends Market {
             periods.add(new OrderPeriod(i,i+1,0,maxOrderPerEachPeriod));
         }
         return periods;
+    }
+
+    public HashMap<Product,Integer> getProductMultiplicityHashMap(){
+        return productMultiplicityHashMap;
     }
 }

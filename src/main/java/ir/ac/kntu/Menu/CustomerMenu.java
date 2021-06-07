@@ -3,6 +3,7 @@ package ir.ac.kntu.Menu;
 import ir.ac.kntu.Manager;
 import ir.ac.kntu.Logic.ScannerWrapper;
 import ir.ac.kntu.Users.Customer;
+import ir.ac.kntu.Utility.OrderDuty;
 
 public class CustomerMenu {
     private Customer customer;
@@ -16,6 +17,8 @@ public class CustomerMenu {
                 "\n1) Order product" +
                 "\n2) Show comments" +
                 "\n3) Show orders" +
+                "\n4) Add comment" +
+                "\n5) Add score" +
                 "\n9) Exit");
         mainMenuHandler(manager);
     }
@@ -32,6 +35,12 @@ public class CustomerMenu {
             case 3:
                 showOrders();
                 break;
+            case 4:
+                OrderDuty.addCommentUser(manager.getOrders(), manager.getMarkets(),manager.getComments(),customer);
+                break;
+            case 5:
+
+                break;
             case 9:
                 return;
             default:
@@ -39,6 +48,7 @@ public class CustomerMenu {
                 mainMenu(manager);
                 break;
         }
+        mainMenu(manager);
     }
 
     public void orderProduct(Manager manager){

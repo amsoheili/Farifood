@@ -1,6 +1,14 @@
 package ir.ac.kntu;
 
-import javax.sound.midi.MidiEvent;
+import ir.ac.kntu.Logic.OrderStatus;
+import ir.ac.kntu.Logic.RestaurantType;
+import ir.ac.kntu.Logic.SalaryType;
+import ir.ac.kntu.Logic.TransportationVehicle;
+import ir.ac.kntu.Markets.*;
+import ir.ac.kntu.Product.Food;
+import ir.ac.kntu.Users.Admin;
+import ir.ac.kntu.Users.Customer;
+import ir.ac.kntu.Users.MarketBoss;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,18 +32,18 @@ public class Main {
     }
 
     public static void createRestaurants(Manager manager,Identify identify){
-        Restaurant res1 = new Restaurant("res1","address",9,21,2,RestaurantType.ECONOMIC,10);
+        Restaurant res1 = new Restaurant("res1","address",9,21,2, RestaurantType.ECONOMIC,10);
         Restaurant res2 = new Restaurant("res2","address2",9,22,2,RestaurantType.MEDIUM,5);
         Restaurant res3 = new Restaurant("res3","address3",9,24,2,RestaurantType.LUXURY,7);
         MarketBoss resBoss1 = new MarketBoss(1,"resBoss1","resBoss1");
         MarketBoss resBoss2 = new MarketBoss(2,"resBoss2","resBoss2");
         MarketBoss resBoss3 = new MarketBoss(3,"resBoss3","resBoss3");
-        Delivery del1 = new Delivery("Del1",TransportationVehicle.MOTORCYCLE,SalaryType.PERORDER,10);
+        Delivery del1 = new Delivery("Del1", TransportationVehicle.MOTORCYCLE, SalaryType.PERORDER,10);
         Delivery del2 = new Delivery("Del2",TransportationVehicle.CAR,SalaryType.PERHOUR,20);
         Food food1 = new Food("res1 makhsoos ",30);
         Food food2 = new Food("res2 makhsoos",10);
         Food food3 = new Food("res3 makhsoos",20);
-        Order order1 = new Order(food1,OrderStatus.PROCESSING);
+        Order order1 = new Order(food1, OrderStatus.PROCESSING);
         res1.setMarketBoss(resBoss1);
         res2.setMarketBoss(resBoss2);
         res3.setMarketBoss(resBoss3);

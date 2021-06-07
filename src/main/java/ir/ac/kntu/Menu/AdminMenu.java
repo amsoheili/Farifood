@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class AdminMenu {
     Admin admin;
 
-    AdminMenu(Admin admin){
+    public AdminMenu(Admin admin){
         this.admin = admin;
     }
 

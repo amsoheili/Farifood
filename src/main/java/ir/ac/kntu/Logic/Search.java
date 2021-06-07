@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class Search {
     private ArrayList<Market> markets;
 
-    Search(){
+    public Search(){
 
     }
 
-    Search(ArrayList<Market> markets){
+    public Search(ArrayList<Market> markets){
         this.markets = markets;
     }
 

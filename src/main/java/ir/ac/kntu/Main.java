@@ -82,7 +82,9 @@ public class Main {
     public static void createSuperMarket(Manager manager,Identify identify){
         SuperMarket sup1 = new SuperMarket("sup1","sup1",0,24,2,2);
         MarketBoss supBoss1 = new MarketBoss(1,"supBoss1","supBoss1");
+        Delivery superDel1 = new Delivery("superDel1", TransportationVehicle.MOTORCYCLE, SalaryType.PERORDER,10);
         Food superFood1 = new Food("superFood1",10);
+        sup1.getDeliveries().add(superDel1);
         sup1.getProducts().add(superFood1);
         sup1.setMarketBoss(supBoss1);
         sup1.getProductMultiplicityHashMap().put(superFood1,5);
@@ -94,7 +96,9 @@ public class Main {
     public static void createGroceryStore(Manager manager,Identify identify){
         GroceryStore gro1 = new GroceryStore("gro1","gro1",0,24,1,5);
         MarketBoss groBoss1 = new MarketBoss(1,"groBoss1","groBoss1");
+        Delivery groDel1 = new Delivery("groDel1",TransportationVehicle.CAR,SalaryType.PERHOUR,20);
         Fruit apple = new Fruit("Apple",20);
+        gro1.getDeliveries().add(groDel1);
         gro1.setMarketBoss(groBoss1);
         gro1.getProducts().add(apple);
         gro1.getProductKilogramHashMap().put(apple,5);

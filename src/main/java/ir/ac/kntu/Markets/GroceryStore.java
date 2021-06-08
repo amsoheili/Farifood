@@ -113,4 +113,13 @@ public class GroceryStore extends Market {
     public HashMap<Product, Integer> getProductKilogramHashMap() {
         return productKilogramHashMap;
     }
+
+    public void showPopularOrderPeriod(){
+        for (int i=0;i<orderPeriods.size();i++){
+            if (orderPeriods.get(i).getMultiplicity() < orderPeriods.get(i).getMaxOrder() &&
+                    orderPeriods.get(i).getMultiplicity() >= 1){
+                System.out.println(i + ") " + orderPeriods.get(i).toString());
+            }
+        }
+    }
 }

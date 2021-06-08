@@ -2,6 +2,8 @@ package ir.ac.kntu.Menu;
 
 import ir.ac.kntu.Manager;
 import ir.ac.kntu.Logic.ScannerWrapper;
+import ir.ac.kntu.Markets.GroceryStore;
+import ir.ac.kntu.Markets.SuperMarket;
 import ir.ac.kntu.Users.Customer;
 import ir.ac.kntu.Utility.OrderDuty;
 
@@ -19,6 +21,7 @@ public class CustomerMenu {
                 "\n3) Show orders" +
                 "\n4) Add comment" +
                 "\n5) Add score" +
+                "\n6) Show most popular ordering period" +
                 "\n9) Exit");
         mainMenuHandler(manager);
     }
@@ -41,6 +44,9 @@ public class CustomerMenu {
             case 5:
                 manager.addScore(customer);
                 break;
+            case 6:
+                showPopularOrderPeriod(manager);
+                break;
             case 9:
                 return;
             default:
@@ -49,6 +55,29 @@ public class CustomerMenu {
                 break;
         }
         mainMenu(manager);
+    }
+
+    public void showPopularOrderPeriod(Manager manager){
+        System.out.println("select the kind of market : ( 1-Supermarket  2-Grocery Store )");
+        int choice = ScannerWrapper.getInstance().nextInt();
+        switch (choice){
+            case 1:
+                System.out.println("Select the supermarket : ");
+                OrderDuty.showMarkets(manager.getMarkets(), true,2);
+                int superMarketChoice = ScannerWrapper.getInstance().nextInt();
+                ((SuperMarket)manager.getMarkets().get(superMarketChoice)).showPopularOrderPeriod();
+                break;
+            case 2:
+                System.out.println("Select the supermarket : ");
+                OrderDuty.showMarkets(manager.getMarkets(), true,3);
+                int groceryStoreChoice = ScannerWrapper.getInstance().nextInt();
+                ((GroceryStore)manager.getMarkets().get(groceryStoreChoice)).showPopularOrderPeriod();
+                break;
+            default:
+                System.out.println("Incorrect input !! please try again ");
+                showPopularOrderPeriod(manager);
+                break;
+        }
     }
 
     public void orderProduct(Manager manager){

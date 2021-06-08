@@ -259,13 +259,13 @@ public class OrderDuty {
             }    
         }else{
             if(isThereDeliveredOrder(orders)){
-            System.out.println("Which one ?");
-            showFilteredOrders(OrderStatus.DELIVERED,orders);
-            int choice = ScannerWrapper.getInstance().nextInt();
-            findMarket(orders.get(choice), markets).addComment(orders.get(choice).getProduct().getName(),comments,user);
-        }else{
-            System.out.println("There are not any delivered order :)");
-        }
+                System.out.println("Which one ?");
+                showFilteredOrders(OrderStatus.DELIVERED,orders);
+                int choice = ScannerWrapper.getInstance().nextInt();
+                findMarket(orders.get(choice), markets).addComment(orders.get(choice).getProduct().getName(),comments,user);
+            }else{
+                System.out.println("There are not any delivered order :)");
+            }
         }
     }
 

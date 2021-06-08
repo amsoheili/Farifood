@@ -41,8 +41,7 @@ public class OrderDuty {
                 "\n1) Ascending score" +
                 "\n2) Descending score" +
                 "\n3) Ascending number of comments" +
-                "\n4) Descending number of comments" +
-                "\n5) Editor's pick");
+                "\n4) Descending number of comments");
         showMarketsHandler(markets,timeConsider,marketCode);
         switch (marketCode){
             case 1:
@@ -132,10 +131,6 @@ public class OrderDuty {
             case 4:
                 showDescendingNumOfComments(markets);
                 break;
-            case 5:
-                //showEditorPick(markets,marketCode);
-                System.out.println("And the main list is : ");
-                break;
             default:
                 System.out.println("Incorrect input !! please try again ");
                 showMarkets(markets,timeConsider,marketCode);
@@ -191,14 +186,6 @@ public class OrderDuty {
             }
         }
     }
-
-//    private static void showEditorPick(ArrayList<Market> markets,int marketCode) {
-//        int x = LocalTime.now().getMinute() % markets.size();
-//        for (int i=0;i<markets.size();i++){
-//            if (  )
-//        }
-//        System.out.println("Our suggestion is : " + x + ")" + markets.get(x).getName());
-//    }
 
     public static void filterOrders(ArrayList<Order> orders,ArrayList<Market> markets,ArrayList<Comment> comments,User user) {
         if (orders == null) {
